@@ -1,13 +1,5 @@
+import type { Game } from "@/lib/types";
 import GameCard from "./GameCard";
-
-interface Game {
-  id: string;
-  slug: string;
-  title: string;
-  creator_name: string;
-  play_count: number;
-  like_count: number;
-}
 
 export default function GameGrid({ games }: { games: Game[] }) {
   if (games.length === 0) {

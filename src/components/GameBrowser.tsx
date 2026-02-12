@@ -1,18 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import type { Game } from "@/lib/types";
 import GameGrid from "@/components/GameGrid";
 
 type SortOption = "newest" | "popular" | "liked";
-
-interface Game {
-  id: string;
-  slug: string;
-  title: string;
-  creator_name: string;
-  play_count: number;
-  like_count: number;
-}
 
 export default function GameBrowser({ initialGames }: { initialGames: Game[] }) {
   const [sort, setSort] = useState<SortOption>("newest");

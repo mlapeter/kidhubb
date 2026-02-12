@@ -1,17 +1,41 @@
+export const dynamic = "force-dynamic";
+
+import { supabase } from "@/lib/supabase";
 import GameBrowser from "@/components/GameBrowser";
 
 async function getGames() {
-  const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : `http://localhost:${process.env.PORT || 3000}`;
+  const { data: games } = await supabase
+    .from("games")
+    .select("id, slug, title, creator_id, play_count, like_count")
+    .eq("status", "active")
+    .order("created_at", { ascending: false })
+    .limit(40);
 
-  const res = await fetch(`${baseUrl}/api/games?limit=40&sort=newest`, {
-    cache: "no-store",
-  });
+  if (!games || games.length === 0) return [];
 
-  if (!res.ok) return [];
-  const data = await res.json();
-  return data.games || [];
+  // Fetch creator names
+  const creatorIds = [...new Set(games.map((g) => g.creator_id).filter(Boolean))];
+  let creatorsMap: Record<string, string> = {};
+
+  if (creatorIds.length > 0) {
+    const { data: creators } = await supabase
+      .from("creators")
+      .select("id, display_name")
+      .in("id", creatorIds);
+
+    if (creators) {
+      creatorsMap = Object.fromEntries(creators.map((c) => [c.id, c.display_name]));
+    }
+  }
+
+  return games.map((game) => ({
+    id: game.id,
+    slug: game.slug,
+    title: game.title,
+    creator_name: creatorsMap[game.creator_id] || "Unknown",
+    play_count: game.play_count,
+    like_count: game.like_count,
+  }));
 }
 
 export const metadata = {

@@ -84,8 +84,7 @@ ${gameHtml}
     headers: {
       "Content-Type": "text/html; charset=utf-8",
       "Content-Security-Policy":
-        "default-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; img-src * data: blob:; media-src * data: blob:; connect-src 'none';",
-      "X-Frame-Options": "ALLOWALL",
+        "default-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; img-src * data: blob:; media-src * data: blob:; connect-src 'none'; form-action 'none'; frame-ancestors *;",
       "X-Content-Type-Options": "nosniff",
     },
   });
