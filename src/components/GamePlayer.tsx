@@ -14,7 +14,7 @@ export default function GamePlayer({ slug, title }: GamePlayerProps) {
       style={{ boxShadow: "inset 0 0 0 2px rgba(0,0,0,0.5), 6px 6px 0 rgba(0,0,0,0.3)" }}
     >
       <iframe
-        sandbox="allow-scripts"
+        sandbox="allow-scripts allow-same-origin"
         src={`${GAME_RENDER_ORIGIN}/render/${slug}`}
         style={{ width: "100%", height: "70vh", border: "none" }}
         title={title}

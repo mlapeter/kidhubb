@@ -1,7 +1,9 @@
 // Only block patterns that are clearly malicious.
-// The real security comes from iframe sandbox="allow-scripts" (no allow-same-origin)
-// and CSP headers (connect-src 'none'). These patterns are a lightweight first pass
-// to catch obviously bad intent — not a security boundary.
+// The real security comes from iframe sandbox="allow-scripts allow-same-origin"
+// served from a separate subdomain (play.kidhubb.com) so allow-same-origin only
+// grants access to that origin, not the main site. CSP headers (connect-src 'none')
+// add another layer. These patterns are a lightweight first pass to catch obviously
+// bad intent — not a security boundary.
 const BLOCKED_PATTERNS: { pattern: RegExp; reason: string }[] = [
   // Crypto mining
   { pattern: /CoinHive/i, reason: "Crypto mining" },
