@@ -1,26 +1,133 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #1a1a2e;
+  --foreground: #e8e8e8;
+  --accent-purple: #9b59b6;
+  --accent-pink: #ff6b9d;
+  --accent-blue: #4fc3f7;
+  --accent-green: #66ff66;
+  --accent-yellow: #ffeb3b;
+  --accent-orange: #ff9800;
+  --card-bg: #16213e;
+  --card-border: #e8e8e8;
+  --pixel-shadow: #000000;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-accent-purple: var(--accent-purple);
+  --color-accent-pink: var(--accent-pink);
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-green: var(--accent-green);
+  --color-accent-yellow: var(--accent-yellow);
+  --color-accent-orange: var(--accent-orange);
+  --color-card-bg: var(--card-bg);
+  --color-card-border: var(--card-border);
+  --font-pixel: "Press Start 2P", monospace;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-pixel);
+  text-transform: uppercase;
+  image-rendering: pixelated;
+}
+
+/* Pixel border utility */
+.pixel-border {
+  border: 4px solid var(--foreground);
+  box-shadow: 4px 4px 0 var(--pixel-shadow);
+}
+
+.pixel-border-purple {
+  border: 4px solid var(--accent-purple);
+  box-shadow: 4px 4px 0 var(--pixel-shadow);
+}
+
+.pixel-border-green {
+  border: 4px solid var(--accent-green);
+  box-shadow: 4px 4px 0 var(--pixel-shadow);
+}
+
+.pixel-border-pink {
+  border: 4px solid var(--accent-pink);
+  box-shadow: 4px 4px 0 var(--pixel-shadow);
+}
+
+.pixel-border-yellow {
+  border: 4px solid var(--accent-yellow);
+  box-shadow: 4px 4px 0 var(--pixel-shadow);
+}
+
+/* Pixel button style */
+.pixel-btn {
+  border: 4px solid var(--foreground);
+  box-shadow: 4px 4px 0 var(--pixel-shadow);
+  transition: transform 0.1s, box-shadow 0.1s;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-family: var(--font-pixel);
+}
+
+.pixel-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--pixel-shadow);
+}
+
+.pixel-btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0px 0px 0 var(--pixel-shadow);
+}
+
+/* Blink animation for retro cursor feel */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.pixel-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* Float animation for decorations */
+@keyframes pixel-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.pixel-float {
+  animation: pixel-float 2s ease-in-out infinite;
+}
+
+/* Pulse for emphasis */
+@keyframes pixel-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.pixel-pulse {
+  animation: pixel-pulse 1.5s ease-in-out infinite;
+}
+
+/* Tab active indicator */
+.pixel-tab-active {
+  border-bottom: 4px solid var(--accent-yellow);
+  color: var(--accent-yellow);
+}
+
+/* Input styling */
+input[type="text"],
+textarea {
+  font-family: var(--font-pixel);
+  text-transform: uppercase;
+  border-radius: 0;
+}
+
+/* Ensure pixel font minimum readability */
+.text-xs {
+  font-size: 10px;
+  line-height: 1.6;
 }
