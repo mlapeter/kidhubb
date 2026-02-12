@@ -61,12 +61,6 @@ export default function PublishForm() {
     setIdentity(getSavedIdentity());
   }, []);
 
-  // Auto-focus textarea on mount
-  useEffect(() => {
-    if (phase === "paste") {
-      textareaRef.current?.focus();
-    }
-  }, [phase]);
 
   function handlePaste(code: string) {
     setRawCode(code);
