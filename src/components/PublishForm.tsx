@@ -41,6 +41,7 @@ export default function PublishForm() {
   const [recovering, setRecovering] = useState(false);
 
   // Game
+  const [focused, setFocused] = useState(false);
   const [rawCode, setRawCode] = useState("");
   const [parsed, setParsed] = useState<ParsedGame | null>(null);
   const [title, setTitle] = useState("");
@@ -246,7 +247,7 @@ export default function PublishForm() {
         <div
           className="rpg-panel-dark relative cursor-pointer p-4"
           onClick={async () => {
-            if (rawCode) {
+            if (rawCode || focused) {
               textareaRef.current?.focus();
               return;
             }
@@ -256,11 +257,14 @@ export default function PublishForm() {
                 handlePaste(text);
               } else if (text && text.trim()) {
                 setRawCode(text);
+                setFocused(true);
               } else {
+                setFocused(true);
                 textareaRef.current?.focus();
               }
             } catch {
-              // Clipboard access denied — fall back to focusing textarea
+              // Clipboard access denied — show textarea with cursor
+              setFocused(true);
               textareaRef.current?.focus();
             }
           }}
@@ -281,10 +285,11 @@ export default function PublishForm() {
               handlePaste(pasted);
             }}
             aria-label="Paste your game code here"
-            className={`w-full resize-none bg-transparent text-[10px] text-parchment focus:outline-none ${rawCode ? "min-h-[40vh]" : "min-h-0 h-0 absolute opacity-0"}`}
+            onFocus={() => setFocused(true)}
+            className={`w-full resize-none bg-transparent text-[10px] text-parchment focus:outline-none ${rawCode || focused ? "min-h-[40vh]" : "min-h-0 h-0 absolute opacity-0"}`}
             spellCheck={false}
           />
-          {!rawCode && (
+          {!rawCode && !focused && (
             <div className="flex flex-col items-center justify-center py-16 gap-4">
               <span className="text-7xl">📋</span>
               <p className="text-sm text-parchment/70">

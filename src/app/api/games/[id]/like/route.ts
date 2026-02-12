@@ -15,7 +15,7 @@ export async function POST(
   // Check if game exists
   const { data: game } = await supabase
     .from("games")
-    .select("id")
+    .select("id, like_count")
     .eq("id", id)
     .single();
 
@@ -36,8 +36,11 @@ export async function POST(
     return NextResponse.json({ error: "Failed to like" }, { status: 500 });
   }
 
-  // Atomic increment to avoid race conditions
-  await supabase.rpc("increment_like_count", { game_id_input: id });
+  // Increment like count
+  await supabase
+    .from("games")
+    .update({ like_count: (game.like_count || 0) + 1 })
+    .eq("id", id);
 
   // Set session cookie if not present
   const response = NextResponse.json({ success: true }, { status: 201 });

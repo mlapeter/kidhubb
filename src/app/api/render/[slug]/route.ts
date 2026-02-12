@@ -11,7 +11,7 @@ export async function GET(
   // Fetch game and content
   const { data: game } = await supabase
     .from("games")
-    .select("id, libraries, status")
+    .select("id, libraries, status, play_count")
     .eq("slug", slug)
     .single();
 
@@ -29,8 +29,12 @@ export async function GET(
     return new NextResponse("Game content not found", { status: 404 });
   }
 
-  // Atomic increment play count (fire and forget)
-  supabase.rpc("increment_play_count", { game_id_input: game.id }).then(() => {});
+  // Increment play count (fire and forget)
+  supabase
+    .from("games")
+    .update({ play_count: (game.play_count || 0) + 1 })
+    .eq("id", game.id)
+    .then(() => {});
 
   const libraryScripts = buildLibraryScriptTags(game.libraries || []);
   const gameHtml = content.html;
