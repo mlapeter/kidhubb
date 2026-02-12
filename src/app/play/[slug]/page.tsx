@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import GamePlayer from "@/components/GamePlayer";
 import CreatorBadge from "@/components/CreatorBadge";
+import LikeButton from "@/components/LikeButton";
 import type { Metadata } from "next";
 
 interface Props {
@@ -49,27 +50,24 @@ export default async function PlayPage({ params }: Props) {
   if (!game) notFound();
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-6">
-      {/* Game header */}
-      <div className="mb-4">
+    <main className="mx-auto max-w-5xl px-4 py-4">
+      {/* Game header — title + creator on one line */}
+      <div className="mb-2 flex items-baseline gap-3 flex-wrap">
         <h1 className="text-sm sm:text-base text-accent-gold drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)]">
           {game.title}
         </h1>
         <CreatorBadge name={game.creator_name} />
-        {game.description && (
-          <p className="mt-1 text-[10px] text-parchment/60">
-            {game.description}
-          </p>
-        )}
       </div>
 
       {/* Game iframe */}
       <GamePlayer slug={game.slug} title={game.title} />
 
       {/* Stats bar */}
-      <div className="mt-4 rpg-panel inline-flex px-4 py-2 gap-4 text-[10px] text-wood-mid/70">
-        <span>♥ {game.like_count} likes</span>
-        <span>▶ {game.play_count} plays</span>
+      <div className="mt-2 flex items-center gap-3">
+        <LikeButton gameId={game.id} initialCount={game.like_count} />
+        <div className="rpg-panel inline-flex px-4 py-2 text-[10px] text-wood-mid/70">
+          <span>▶ {game.play_count} plays</span>
+        </div>
       </div>
     </main>
   );

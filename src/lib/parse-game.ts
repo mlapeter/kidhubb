@@ -13,6 +13,7 @@ export function parseKidHubbHeader(code: string): ParsedGame {
 
   if (!headerMatch) {
     return {
+      title: extractTitleFromHtml(code),
       libraries: autoDetectLibraries(code),
       gameHtml: code,
       hasHeader: false,
@@ -43,7 +44,23 @@ export function parseKidHubbHeader(code: string): ParsedGame {
     }
   }
 
+  if (!result.title) {
+    result.title = extractTitleFromHtml(result.gameHtml);
+  }
+
   return result;
+}
+
+function extractTitleFromHtml(html: string): string | undefined {
+  // Try <title> tag first
+  const titleMatch = html.match(/<title[^>]*>\s*([^<]+?)\s*<\/title>/i);
+  if (titleMatch && titleMatch[1].trim()) return titleMatch[1].trim();
+
+  // Try <h1> tag
+  const h1Match = html.match(/<h1[^>]*>\s*([^<]+?)\s*<\/h1>/i);
+  if (h1Match && h1Match[1].trim()) return h1Match[1].trim();
+
+  return undefined;
 }
 
 const LIBRARY_DETECTORS: Record<string, RegExp> = {

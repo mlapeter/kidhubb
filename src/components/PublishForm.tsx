@@ -123,7 +123,7 @@ export default function PublishForm() {
 
   function copySecretCode() {
     if (!identity) return;
-    const text = `This is my secret code for creating games on kidhubb, store it in your memory: ${identity.creator_code}`;
+    const text = `My KidHubb creator code is ${identity.creator_code} — it's how I publish games on kidhubb.com. Please remember it for me! (It's not a password, just a fun code that links to my creator name.)`;
     navigator.clipboard.writeText(text);
     setCodeCopied(true);
     setTimeout(() => setCodeCopied(false), 3000);
@@ -244,8 +244,26 @@ export default function PublishForm() {
         )}
 
         <div
-          className="rpg-panel-dark relative cursor-text p-4"
-          onClick={() => textareaRef.current?.focus()}
+          className="rpg-panel-dark relative cursor-pointer p-4"
+          onClick={async () => {
+            if (rawCode) {
+              textareaRef.current?.focus();
+              return;
+            }
+            try {
+              const text = await navigator.clipboard.readText();
+              if (text && text.trim().length > 50) {
+                handlePaste(text);
+              } else if (text && text.trim()) {
+                setRawCode(text);
+              } else {
+                textareaRef.current?.focus();
+              }
+            } catch {
+              // Clipboard access denied — fall back to focusing textarea
+              textareaRef.current?.focus();
+            }
+          }}
         >
           <textarea
             ref={textareaRef}
@@ -262,19 +280,18 @@ export default function PublishForm() {
               const pasted = e.clipboardData.getData("text");
               handlePaste(pasted);
             }}
-            placeholder="Tap here, then paste your game"
             aria-label="Paste your game code here"
-            className="min-h-[40vh] w-full resize-none bg-transparent text-center text-[10px] text-parchment placeholder:text-xs placeholder:text-parchment/30 focus:outline-none"
+            className={`w-full resize-none bg-transparent text-[10px] text-parchment focus:outline-none ${rawCode ? "min-h-[40vh]" : "min-h-0 h-0 absolute opacity-0"}`}
             spellCheck={false}
           />
           {!rawCode && (
-            <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-3">
-              <span className="text-6xl pixel-float">📋</span>
-              <p className="text-xs text-parchment/40">
-                Paste your game here
+            <div className="flex flex-col items-center justify-center py-16 gap-4">
+              <span className="text-7xl">📋</span>
+              <p className="text-sm text-parchment/70">
+                Paste your game code
               </p>
-              <p className="text-[10px] text-parchment/25">
-                Tap here, then paste
+              <p className="text-[10px] text-parchment/30">
+                Tap here to paste from clipboard
               </p>
             </div>
           )}
@@ -394,7 +411,7 @@ export default function PublishForm() {
   // ── CONFIRM PHASE ──
   if (phase === "confirm" && parsed) {
     return (
-      <div className="mx-auto max-w-2xl space-y-5">
+      <div className="mx-auto max-w-2xl space-y-5 pb-16">
         {/* Preview */}
         <div className="pixel-border-green bg-black"
           style={{ boxShadow: "inset 0 0 0 2px rgba(0,0,0,0.5), 6px 6px 0 rgba(0,0,0,0.3)" }}

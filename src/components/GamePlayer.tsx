@@ -16,7 +16,7 @@ export default function GamePlayer({ slug, title }: GamePlayerProps) {
       <iframe
         sandbox="allow-scripts allow-same-origin"
         src={`${GAME_RENDER_ORIGIN}/render/${slug}`}
-        style={{ width: "100%", height: "70vh", border: "none" }}
+        style={{ width: "100%", height: "78vh", border: "none" }}
         title={title}
         loading="lazy"
       />

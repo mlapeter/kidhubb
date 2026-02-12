@@ -3,7 +3,7 @@ import GameBrowser from "@/components/GameBrowser";
 async function getGames() {
   const baseUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3000";
+    : `http://localhost:${process.env.PORT || 3000}`;
 
   const res = await fetch(`${baseUrl}/api/games?limit=40&sort=newest`, {
     cache: "no-store",
