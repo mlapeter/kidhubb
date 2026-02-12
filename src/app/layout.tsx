@@ -23,10 +23,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${pixelFont.variable} font-pixel bg-background text-foreground min-h-screen`}
+        className={`${pixelFont.variable} font-pixel text-foreground min-h-screen`}
       >
         <Header />
-        {children}
+        <div className="relative z-[1]">
+          {children}
+        </div>
       </body>
     </html>
   );

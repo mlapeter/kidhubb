@@ -52,10 +52,12 @@ export default async function PlayPage({ params }: Props) {
     <main className="mx-auto max-w-5xl px-4 py-6">
       {/* Game header */}
       <div className="mb-4">
-        <h1 className="text-sm sm:text-base text-accent-yellow">{game.title}</h1>
+        <h1 className="text-sm sm:text-base text-accent-gold drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)]">
+          {game.title}
+        </h1>
         <CreatorBadge name={game.creator_name} />
         {game.description && (
-          <p className="mt-1 text-[10px] text-foreground/60">
+          <p className="mt-1 text-[10px] text-parchment/60">
             {game.description}
           </p>
         )}
@@ -65,7 +67,7 @@ export default async function PlayPage({ params }: Props) {
       <GamePlayer slug={game.slug} title={game.title} />
 
       {/* Stats bar */}
-      <div className="mt-4 flex items-center gap-4 text-[10px] text-foreground/50">
+      <div className="mt-4 rpg-panel inline-flex px-4 py-2 gap-4 text-[10px] text-wood-mid/70">
         <span>♥ {game.like_count} likes</span>
         <span>▶ {game.play_count} plays</span>
       </div>

@@ -23,11 +23,13 @@ export default async function PlayPage() {
   const initialGames = await getGames();
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-6">
-      <h1 className="text-base sm:text-lg text-accent-yellow mb-6 text-center">
+    <main className="mx-auto max-w-6xl px-4 py-8">
+      <h1 className="text-sm sm:text-base text-accent-gold text-center mb-6 drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)]">
         👾 All Games
       </h1>
-      <GameBrowser initialGames={initialGames} />
+      <div className="flex flex-col items-center">
+        <GameBrowser initialGames={initialGames} />
+      </div>
     </main>
   );
 }

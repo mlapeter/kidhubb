@@ -1,133 +1,301 @@
 @import "tailwindcss";
 
 :root {
-  --background: #1a1a2e;
-  --foreground: #e8e8e8;
-  --accent-purple: #9b59b6;
-  --accent-pink: #ff6b9d;
+  /* Sky palette */
+  --sky-top: #0c1445;
+  --sky-mid: #1b3a7a;
+  --sky-low: #3a7cb8;
+  --horizon: #7ec8c8;
+
+  /* Ground palette */
+  --ground-light: #5fad46;
+  --ground-mid: #3d8a2e;
+  --ground-dark: #2a6620;
+
+  /* Warm UI palette */
+  --parchment: #f5e6c8;
+  --parchment-dark: #e0c89a;
+  --parchment-border: #b8945a;
+  --wood-dark: #3d2b1f;
+  --wood-mid: #5c3a1e;
+  --wood-light: #8b6914;
+
+  /* Accents */
+  --accent-gold: #ffd700;
+  --accent-orange: #ff8c42;
+  --accent-red: #e74c3c;
+  --accent-green: #4cdb4c;
   --accent-blue: #4fc3f7;
-  --accent-green: #66ff66;
-  --accent-yellow: #ffeb3b;
-  --accent-orange: #ff9800;
-  --card-bg: #16213e;
-  --card-border: #e8e8e8;
-  --pixel-shadow: #000000;
+  --accent-purple: #b07ce8;
+  --accent-pink: #ff6b9d;
+
+  /* Semantic */
+  --foreground: #f5e6c8;
+  --foreground-dark: #3d2b1f;
+  --card-bg: var(--parchment);
+  --card-border: var(--parchment-border);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-sky-top: var(--sky-top);
+  --color-sky-mid: var(--sky-mid);
+  --color-sky-low: var(--sky-low);
+  --color-horizon: var(--horizon);
+  --color-ground-light: var(--ground-light);
+  --color-ground-mid: var(--ground-mid);
+  --color-ground-dark: var(--ground-dark);
+  --color-parchment: var(--parchment);
+  --color-parchment-dark: var(--parchment-dark);
+  --color-parchment-border: var(--parchment-border);
+  --color-wood-dark: var(--wood-dark);
+  --color-wood-mid: var(--wood-mid);
+  --color-wood-light: var(--wood-light);
+  --color-accent-gold: var(--accent-gold);
+  --color-accent-orange: var(--accent-orange);
+  --color-accent-red: var(--accent-red);
+  --color-accent-green: var(--accent-green);
+  --color-accent-blue: var(--accent-blue);
   --color-accent-purple: var(--accent-purple);
   --color-accent-pink: var(--accent-pink);
-  --color-accent-blue: var(--accent-blue);
-  --color-accent-green: var(--accent-green);
-  --color-accent-yellow: var(--accent-yellow);
-  --color-accent-orange: var(--accent-orange);
+  --color-foreground: var(--foreground);
+  --color-foreground-dark: var(--foreground-dark);
   --color-card-bg: var(--card-bg);
   --color-card-border: var(--card-border);
   --font-pixel: "Press Start 2P", monospace;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-pixel);
-  text-transform: uppercase;
-  image-rendering: pixelated;
+/* ── Base styles ── */
+@layer base {
+  body {
+    background: linear-gradient(
+      180deg,
+      var(--sky-top) 0%,
+      var(--sky-mid) 30%,
+      var(--sky-low) 60%,
+      var(--horizon) 85%,
+      var(--ground-light) 85%,
+      var(--ground-mid) 92%,
+      var(--ground-dark) 100%
+    );
+    background-attachment: fixed;
+    color: var(--foreground);
+    font-family: var(--font-pixel);
+    text-transform: uppercase;
+    image-rendering: pixelated;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 8%, #ffffff 100%, transparent),
+      radial-gradient(1px 1px at 25% 3%, #ffffcc 100%, transparent),
+      radial-gradient(2px 2px at 40% 12%, #ffffff 100%, transparent),
+      radial-gradient(1px 1px at 55% 5%, #ffffcc 100%, transparent),
+      radial-gradient(1px 1px at 70% 15%, #ffffff 100%, transparent),
+      radial-gradient(2px 2px at 85% 7%, #ffffcc 100%, transparent),
+      radial-gradient(1px 1px at 15% 20%, #ffffff 100%, transparent),
+      radial-gradient(1px 1px at 33% 18%, #ffffcc 100%, transparent),
+      radial-gradient(2px 2px at 60% 22%, #ffffff 100%, transparent),
+      radial-gradient(1px 1px at 78% 25%, #ffffcc 100%, transparent),
+      radial-gradient(1px 1px at 92% 10%, #ffffff 100%, transparent),
+      radial-gradient(1px 1px at 5% 28%, #ffffff 100%, transparent),
+      radial-gradient(2px 2px at 48% 2%, #ffffcc 100%, transparent),
+      radial-gradient(1px 1px at 20% 30%, #ffffff 100%, transparent),
+      radial-gradient(1px 1px at 65% 28%, #ffffcc 100%, transparent),
+      radial-gradient(1px 1px at 88% 18%, #ffffff 100%, transparent),
+      radial-gradient(1px 1px at 42% 26%, #ffffff 100%, transparent),
+      radial-gradient(2px 2px at 8% 14%, #ffffcc 100%, transparent),
+      radial-gradient(1px 1px at 73% 6%, #ffffff 100%, transparent),
+      radial-gradient(1px 1px at 95% 22%, #ffffcc 100%, transparent);
+    animation: twinkle 4s ease-in-out infinite alternate;
+  }
+
+  input[type="text"],
+  textarea {
+    font-family: var(--font-pixel);
+    text-transform: uppercase;
+    border-radius: 0;
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--sky-top);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--wood-mid);
+    border: 2px solid var(--sky-top);
+  }
 }
 
-/* Pixel border utility */
-.pixel-border {
-  border: 4px solid var(--foreground);
-  box-shadow: 4px 4px 0 var(--pixel-shadow);
+/* ── Component styles ── */
+@layer components {
+  /* RPG panel (parchment card with wood border) */
+  .rpg-panel {
+    background: var(--parchment);
+    border: 4px solid var(--wood-mid);
+    box-shadow:
+      inset 0 0 0 2px var(--parchment-dark),
+      inset 0 0 0 4px var(--wood-mid),
+      6px 6px 0 rgba(0,0,0,0.3);
+    color: var(--wood-dark);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Dark variant for inputs on sky backgrounds */
+  .rpg-panel-dark {
+    background: rgba(12, 20, 69, 0.85);
+    border: 4px solid var(--parchment-border);
+    box-shadow:
+      inset 0 0 0 2px rgba(245, 230, 200, 0.1),
+      inset 0 0 0 4px var(--parchment-border),
+      6px 6px 0 rgba(0,0,0,0.3);
+    color: var(--foreground);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* RPG button (raised wood/gold look) */
+  .rpg-btn {
+    background: linear-gradient(180deg, #d4a44a 0%, #b8861e 50%, #9a6e14 100%);
+    border: 4px solid var(--wood-dark);
+    box-shadow:
+      inset 0 2px 0 rgba(255,255,255,0.2),
+      inset 0 -2px 0 rgba(0,0,0,0.2),
+      4px 4px 0 rgba(0,0,0,0.4);
+    color: var(--wood-dark);
+    cursor: pointer;
+    text-transform: uppercase;
+    font-family: var(--font-pixel);
+    transition: transform 0.1s, box-shadow 0.1s;
+    position: relative;
+    z-index: 1;
+  }
+
+  .rpg-btn:hover {
+    background: linear-gradient(180deg, #e0b45a 0%, #c89828 50%, #aa7e1a 100%);
+    transform: translate(-2px, -2px);
+    box-shadow:
+      inset 0 2px 0 rgba(255,255,255,0.3),
+      inset 0 -2px 0 rgba(0,0,0,0.2),
+      6px 6px 0 rgba(0,0,0,0.4);
+  }
+
+  .rpg-btn:active {
+    transform: translate(4px, 4px);
+    box-shadow:
+      inset 0 2px 0 rgba(0,0,0,0.2),
+      inset 0 -2px 0 rgba(255,255,255,0.1),
+      0 0 0 rgba(0,0,0,0.4);
+  }
+
+  /* Button color variants */
+  .rpg-btn-purple {
+    background: linear-gradient(180deg, #c084fc 0%, #9b59b6 50%, #7c3aed 100%);
+    color: #fff;
+  }
+  .rpg-btn-purple:hover {
+    background: linear-gradient(180deg, #d0a0ff 0%, #ab69c6 50%, #8c4afd 100%);
+  }
+
+  .rpg-btn-green {
+    background: linear-gradient(180deg, #6ee76e 0%, #4caf4c 50%, #388e38 100%);
+    color: var(--wood-dark);
+  }
+  .rpg-btn-green:hover {
+    background: linear-gradient(180deg, #7ef77e 0%, #5cbf5c 50%, #489e48 100%);
+  }
+
+  .rpg-btn-red {
+    background: linear-gradient(180deg, #ff7b7b 0%, #e74c4c 50%, #c0392b 100%);
+    color: #fff;
+  }
+
+  /* Pixel borders */
+  .pixel-border {
+    border: 4px solid var(--wood-mid);
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 1;
+  }
+
+  .pixel-border-gold {
+    border: 4px solid var(--accent-gold);
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 1;
+  }
+
+  .pixel-border-green {
+    border: 4px solid var(--accent-green);
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 1;
+  }
+
+  .pixel-border-pink {
+    border: 4px solid var(--accent-pink);
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 1;
+  }
+
+  .pixel-border-purple {
+    border: 4px solid var(--accent-purple);
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Animations */
+  .pixel-blink {
+    animation: blink 1s step-end infinite;
+  }
+
+  .pixel-float {
+    animation: pixel-float 2s ease-in-out infinite;
+  }
+
+  .pixel-pulse {
+    animation: pixel-pulse 1.5s ease-in-out infinite;
+  }
+
+  .cloud-drift {
+    animation: cloud-drift 6s ease-in-out infinite alternate;
+  }
 }
 
-.pixel-border-purple {
-  border: 4px solid var(--accent-purple);
-  box-shadow: 4px 4px 0 var(--pixel-shadow);
+/* ── Keyframes (outside layers) ── */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 
-.pixel-border-green {
-  border: 4px solid var(--accent-green);
-  box-shadow: 4px 4px 0 var(--pixel-shadow);
-}
-
-.pixel-border-pink {
-  border: 4px solid var(--accent-pink);
-  box-shadow: 4px 4px 0 var(--pixel-shadow);
-}
-
-.pixel-border-yellow {
-  border: 4px solid var(--accent-yellow);
-  box-shadow: 4px 4px 0 var(--pixel-shadow);
-}
-
-/* Pixel button style */
-.pixel-btn {
-  border: 4px solid var(--foreground);
-  box-shadow: 4px 4px 0 var(--pixel-shadow);
-  transition: transform 0.1s, box-shadow 0.1s;
-  cursor: pointer;
-  text-transform: uppercase;
-  font-family: var(--font-pixel);
-}
-
-.pixel-btn:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 var(--pixel-shadow);
-}
-
-.pixel-btn:active {
-  transform: translate(4px, 4px);
-  box-shadow: 0px 0px 0 var(--pixel-shadow);
-}
-
-/* Blink animation for retro cursor feel */
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
 
-.pixel-blink {
-  animation: blink 1s step-end infinite;
-}
-
-/* Float animation for decorations */
 @keyframes pixel-float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-8px); }
 }
 
-.pixel-float {
-  animation: pixel-float 2s ease-in-out infinite;
-}
-
-/* Pulse for emphasis */
 @keyframes pixel-pulse {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.05); }
 }
 
-.pixel-pulse {
-  animation: pixel-pulse 1.5s ease-in-out infinite;
-}
-
-/* Tab active indicator */
-.pixel-tab-active {
-  border-bottom: 4px solid var(--accent-yellow);
-  color: var(--accent-yellow);
-}
-
-/* Input styling */
-input[type="text"],
-textarea {
-  font-family: var(--font-pixel);
-  text-transform: uppercase;
-  border-radius: 0;
-}
-
-/* Ensure pixel font minimum readability */
-.text-xs {
-  font-size: 10px;
-  line-height: 1.6;
+@keyframes cloud-drift {
+  0% { transform: translateX(-10px); }
+  100% { transform: translateX(10px); }
 }

@@ -80,11 +80,9 @@ export default function PublishForm() {
     setDescription(result.description || "");
     setError("");
 
-    // If they already have an identity, go straight to confirm
     if (identity) {
       setPhase("confirm");
     } else {
-      // Auto-create account for new users
       autoCreateAccount(result);
     }
   }
@@ -114,8 +112,6 @@ export default function PublishForm() {
       };
       saveIdentity(newIdentity);
       setIdentity(newIdentity);
-
-      // Make sure parsed state is set before showing welcome
       setParsed(parsedGame);
       setPhase("welcome");
     } catch {
@@ -239,8 +235,8 @@ export default function PublishForm() {
       <div className="mx-auto max-w-2xl space-y-4">
         {/* Identity banner for returning users */}
         {identity && (
-          <div className="pixel-border-purple bg-card-bg p-3 text-center">
-            <p className="text-[10px] text-foreground/60">
+          <div className="rpg-panel p-3 text-center">
+            <p className="text-[10px] text-wood-mid/70">
               Publishing as{" "}
               <span className="text-accent-purple">{identity.display_name}</span>
             </p>
@@ -248,7 +244,7 @@ export default function PublishForm() {
         )}
 
         <div
-          className="pixel-border relative cursor-text bg-card-bg p-4"
+          className="rpg-panel-dark relative cursor-text p-4"
           onClick={() => textareaRef.current?.focus()}
         >
           <textarea
@@ -268,16 +264,16 @@ export default function PublishForm() {
             }}
             placeholder="Tap here, then paste your game"
             aria-label="Paste your game code here"
-            className="min-h-[40vh] w-full resize-none bg-transparent text-center text-[10px] text-foreground placeholder:text-xs placeholder:text-foreground/30 focus:outline-none"
+            className="min-h-[40vh] w-full resize-none bg-transparent text-center text-[10px] text-parchment placeholder:text-xs placeholder:text-parchment/30 focus:outline-none"
             spellCheck={false}
           />
           {!rawCode && (
             <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-3">
               <span className="text-6xl pixel-float">📋</span>
-              <p className="text-xs text-foreground/40">
+              <p className="text-xs text-parchment/40">
                 Paste your game here
               </p>
-              <p className="text-[10px] text-foreground/25">
+              <p className="text-[10px] text-parchment/25">
                 Tap here, then paste
               </p>
             </div>
@@ -287,14 +283,14 @@ export default function PublishForm() {
         {creatingAccount && (
           <div className="text-center py-4">
             <span className="text-2xl pixel-blink">⏳</span>
-            <p className="mt-2 text-[10px] text-foreground/50">Setting up your account...</p>
+            <p className="mt-2 text-[10px] text-parchment/50">Setting up your account...</p>
           </div>
         )}
 
         {error && (
-          <p className="pixel-border-pink bg-card-bg p-3 text-[10px] text-accent-pink">
-            {error}
-          </p>
+          <div className="rpg-panel p-3">
+            <p className="text-[10px] text-accent-red">{error}</p>
+          </div>
         )}
 
         {/* Recovery link */}
@@ -303,13 +299,13 @@ export default function PublishForm() {
             {!showRecovery ? (
               <button
                 onClick={() => setShowRecovery(true)}
-                className="text-[10px] text-foreground/30 hover:text-foreground/60"
+                className="text-[10px] text-parchment/30 hover:text-parchment/60"
               >
                 Have a secret code?
               </button>
             ) : (
-              <div className="pixel-border bg-card-bg p-4 space-y-3">
-                <p className="text-[10px] text-foreground/60">
+              <div className="rpg-panel p-4 space-y-3 text-left">
+                <p className="text-[10px] text-wood-dark/70 text-center">
                   Enter your secret code
                 </p>
                 <div className="flex gap-2">
@@ -318,7 +314,7 @@ export default function PublishForm() {
                     value={recoveryCode}
                     onChange={(e) => setRecoveryCode(e.target.value)}
                     placeholder="WORD-WORD-00"
-                    className="flex-1 border-4 border-foreground bg-background px-3 py-2 text-[10px] text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-accent-purple"
+                    className="flex-1 border-4 border-wood-mid bg-parchment-dark px-3 py-2 text-[10px] text-wood-dark placeholder:text-wood-mid/40 focus:outline-none focus:border-accent-purple"
                     onKeyDown={(e) => {
                       if (e.key === "Enter") handleRecovery();
                     }}
@@ -326,13 +322,13 @@ export default function PublishForm() {
                   <button
                     onClick={handleRecovery}
                     disabled={recovering || !recoveryCode.trim()}
-                    className="pixel-btn bg-accent-purple px-4 py-2 text-[10px] text-white disabled:opacity-50"
+                    className="rpg-btn rpg-btn-purple px-4 py-2 text-[10px] disabled:opacity-50"
                   >
                     {recovering ? "..." : "Go"}
                   </button>
                 </div>
                 {recoveryError && (
-                  <p className="text-[10px] text-accent-pink">{recoveryError}</p>
+                  <p className="text-[10px] text-accent-red">{recoveryError}</p>
                 )}
                 <button
                   onClick={() => {
@@ -340,7 +336,7 @@ export default function PublishForm() {
                     setRecoveryCode("");
                     setRecoveryError("");
                   }}
-                  className="text-[10px] text-foreground/30 hover:text-foreground/60"
+                  className="text-[10px] text-wood-mid/50 hover:text-wood-dark block mx-auto"
                 >
                   Cancel
                 </button>
@@ -358,36 +354,36 @@ export default function PublishForm() {
       <div className="mx-auto max-w-lg space-y-6 text-center">
         <div className="text-5xl pixel-float">🎉</div>
 
-        <h2 className="text-sm sm:text-base text-accent-yellow">
+        <h2 className="text-sm sm:text-base text-accent-gold drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)]">
           You are {identity.display_name}!
         </h2>
 
-        <div className="pixel-border-yellow bg-card-bg p-4 space-y-3">
-          <p className="text-[10px] text-foreground/60">
+        <div className="rpg-panel p-5 space-y-3">
+          <p className="text-[10px] text-wood-mid/70">
             Your secret code is
           </p>
-          <p className="text-sm sm:text-base text-accent-green pixel-pulse">
+          <p className="text-sm sm:text-base text-accent-purple pixel-pulse">
             {identity.creator_code}
           </p>
-          <p className="text-[10px] text-foreground/40">
+          <p className="text-[8px] text-wood-mid/50 normal-case">
             Save this! You need it to publish from other devices
           </p>
         </div>
 
         <button
           onClick={copySecretCode}
-          className="pixel-btn bg-accent-yellow px-6 py-4 text-xs text-background w-full"
+          className="rpg-btn w-full px-6 py-4 text-[10px]"
         >
           {codeCopied ? "✓ Copied!" : "📋 Copy Secret Code"}
         </button>
 
-        <p className="text-[10px] text-foreground/40">
+        <p className="text-[10px] text-parchment/40">
           Tip: Paste it in your AI chat so it remembers for you
         </p>
 
         <button
           onClick={proceedToConfirm}
-          className="pixel-btn bg-accent-purple px-6 py-4 text-xs text-white w-full"
+          className="rpg-btn rpg-btn-purple w-full px-6 py-4 text-[10px]"
         >
           ▶ Continue to publish
         </button>
@@ -400,7 +396,9 @@ export default function PublishForm() {
     return (
       <div className="mx-auto max-w-2xl space-y-5">
         {/* Preview */}
-        <div className="pixel-border-green bg-black">
+        <div className="pixel-border-green bg-black"
+          style={{ boxShadow: "inset 0 0 0 2px rgba(0,0,0,0.5), 6px 6px 0 rgba(0,0,0,0.3)" }}
+        >
           <iframe
             sandbox="allow-scripts"
             srcDoc={parsed.gameHtml}
@@ -420,15 +418,15 @@ export default function PublishForm() {
             placeholder="What's your game called?"
             maxLength={60}
             autoFocus
-            className="w-full border-4 border-foreground bg-card-bg px-4 py-3 text-center text-xs text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-accent-purple"
+            className="w-full border-4 border-wood-mid bg-parchment px-4 py-3 text-center text-xs text-wood-dark placeholder:text-wood-mid/40 focus:outline-none focus:border-accent-purple"
           />
         ) : (
-          <h2 className="text-center text-sm text-accent-yellow">{title}</h2>
+          <h2 className="text-center text-sm text-accent-gold drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)]">{title}</h2>
         )}
 
         {/* Identity */}
         {identity && (
-          <p className="text-center text-[10px] text-foreground/40">
+          <p className="text-center text-[10px] text-parchment/50">
             by <span className="text-accent-purple">{identity.display_name}</span>
           </p>
         )}
@@ -437,22 +435,22 @@ export default function PublishForm() {
         <button
           onClick={handlePublish}
           disabled={loading || !identity}
-          className="pixel-btn w-full bg-accent-purple px-6 py-5 text-sm text-white disabled:opacity-50"
+          className="rpg-btn rpg-btn-green w-full px-6 py-5 text-xs disabled:opacity-50"
         >
           {loading ? "Publishing..." : "🚀 Publish My Game!"}
         </button>
 
         <button
           onClick={reset}
-          className="mx-auto block text-[10px] text-foreground/30 hover:text-foreground/60"
+          className="mx-auto block text-[10px] text-parchment/30 hover:text-parchment/60"
         >
           ← Start over
         </button>
 
         {error && (
-          <p className="pixel-border-pink bg-card-bg p-3 text-[10px] text-accent-pink">
-            {error}
-          </p>
+          <div className="rpg-panel p-3">
+            <p className="text-[10px] text-accent-red">{error}</p>
+          </div>
         )}
       </div>
     );
@@ -463,24 +461,24 @@ export default function PublishForm() {
     return (
       <div className="mx-auto max-w-lg space-y-6 text-center">
         <div className="text-5xl">🎉</div>
-        <h2 className="text-sm sm:text-base text-accent-green">
+        <h2 className="text-sm sm:text-base text-accent-gold drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)]">
           Nice! Your game is live!
         </h2>
-        <p className="text-[10px] text-foreground/60">
+        <p className="text-[10px] text-parchment/60">
           Share this link with friends:
         </p>
 
-        <div className="pixel-border bg-card-bg p-3 flex items-center gap-2">
+        <div className="rpg-panel p-3 flex items-center gap-2">
           <input
             type="text"
             readOnly
             value={publishResult.url}
-            className="flex-1 bg-transparent text-[10px] text-foreground outline-none"
+            className="flex-1 bg-transparent text-[8px] text-wood-dark outline-none normal-case"
             aria-label="Game URL"
           />
           <button
             onClick={copyUrl}
-            className="pixel-btn bg-accent-purple px-3 py-2 text-[10px] text-white"
+            className="rpg-btn rpg-btn-purple px-3 py-2 text-[10px]"
           >
             {copied ? "✓" : "Copy"}
           </button>
@@ -489,13 +487,13 @@ export default function PublishForm() {
         <div className="flex gap-3">
           <a
             href={`/play/${publishResult.slug}`}
-            className="pixel-btn flex-1 bg-accent-green px-4 py-3 text-[10px] text-background text-center"
+            className="rpg-btn rpg-btn-green flex-1 px-4 py-3 text-[10px] text-center"
           >
             ▶ Play It
           </a>
           <button
             onClick={reset}
-            className="pixel-btn flex-1 bg-card-bg px-4 py-3 text-[10px] text-foreground text-center"
+            className="rpg-btn flex-1 px-4 py-3 text-[10px] text-center"
           >
             🎮 Make Another
           </button>

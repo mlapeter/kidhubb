@@ -12,13 +12,13 @@ interface Game {
 export default function GameGrid({ games }: { games: Game[] }) {
   if (games.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-center">
-        <span className="text-6xl pixel-float">👾</span>
-        <h2 className="mt-4 text-sm sm:text-base text-accent-yellow">
+      <div className="rpg-panel flex flex-col items-center justify-center py-16 px-8 text-center mx-auto max-w-md">
+        <span className="text-5xl pixel-float">👾</span>
+        <h2 className="mt-4 text-xs text-wood-dark">
           No games yet!
         </h2>
-        <p className="mt-2 text-[10px] text-foreground/60">
-          Be the first to publish a game
+        <p className="mt-2 text-[8px] text-wood-mid/60 normal-case">
+          Be the first to publish a game and see it here
         </p>
       </div>
     );
