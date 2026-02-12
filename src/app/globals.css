@@ -215,11 +215,6 @@
     background: linear-gradient(180deg, #7ef77e 0%, #5cbf5c 50%, #489e48 100%);
   }
 
-  .rpg-btn-red {
-    background: linear-gradient(180deg, #ff7b7b 0%, #e74c4c 50%, #c0392b 100%);
-    color: #fff;
-  }
-
   /* Pixel borders */
   .pixel-border {
     border: 4px solid var(--wood-mid);
@@ -228,29 +223,8 @@
     z-index: 1;
   }
 
-  .pixel-border-gold {
-    border: 4px solid var(--accent-gold);
-    box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
-    position: relative;
-    z-index: 1;
-  }
-
   .pixel-border-green {
     border: 4px solid var(--accent-green);
-    box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
-    position: relative;
-    z-index: 1;
-  }
-
-  .pixel-border-pink {
-    border: 4px solid var(--accent-pink);
-    box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
-    position: relative;
-    z-index: 1;
-  }
-
-  .pixel-border-purple {
-    border: 4px solid var(--accent-purple);
     box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
     position: relative;
     z-index: 1;

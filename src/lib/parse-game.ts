@@ -5,7 +5,6 @@ export interface ParsedGame {
   description?: string;
   libraries: string[];
   gameHtml: string;
-  hasHeader: boolean;
 }
 
 export function parseKidHubbHeader(code: string): ParsedGame {
@@ -16,7 +15,6 @@ export function parseKidHubbHeader(code: string): ParsedGame {
       title: extractTitleFromHtml(code),
       libraries: autoDetectLibraries(code),
       gameHtml: code,
-      hasHeader: false,
     };
   }
 
@@ -24,7 +22,6 @@ export function parseKidHubbHeader(code: string): ParsedGame {
   const result: ParsedGame = {
     libraries: [],
     gameHtml: code.replace(/<!--KIDHUBB\s*\n[\s\S]*?-->\s*/, ""),
-    hasHeader: true,
   };
 
   for (const line of headerText.split("\n")) {
@@ -75,7 +72,7 @@ const LIBRARY_DETECTORS: Record<string, RegExp> = {
   react: /React\.createElement|ReactDOM\.render|createRoot/i,
 };
 
-export function autoDetectLibraries(code: string): string[] {
+function autoDetectLibraries(code: string): string[] {
   const detected: string[] = [];
   for (const [lib, pattern] of Object.entries(LIBRARY_DETECTORS)) {
     if (pattern.test(code)) {

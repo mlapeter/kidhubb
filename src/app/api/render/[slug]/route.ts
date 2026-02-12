@@ -11,7 +11,7 @@ export async function GET(
   // Fetch game and content
   const { data: game } = await supabase
     .from("games")
-    .select("id, libraries, status, play_count")
+    .select("id, libraries, status")
     .eq("slug", slug)
     .single();
 
@@ -29,12 +29,8 @@ export async function GET(
     return new NextResponse("Game content not found", { status: 404 });
   }
 
-  // Increment play count (fire and forget)
-  supabase
-    .from("games")
-    .update({ play_count: (game.play_count || 0) + 1 })
-    .eq("id", game.id)
-    .then(() => {});
+  // Atomic increment play count (fire and forget)
+  supabase.rpc("increment_play_count", { game_id_input: game.id }).then(() => {});
 
   const libraryScripts = buildLibraryScriptTags(game.libraries || []);
   const gameHtml = content.html;
@@ -84,8 +80,7 @@ ${gameHtml}
     headers: {
       "Content-Type": "text/html; charset=utf-8",
       "Content-Security-Policy":
-        "default-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; img-src * data: blob:; media-src * data: blob:; connect-src 'none';",
-      "X-Frame-Options": "ALLOWALL",
+        "default-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; img-src * data: blob:; media-src * data: blob:; connect-src 'none'; form-action 'none'; frame-ancestors *;",
       "X-Content-Type-Options": "nosniff",
     },
   });

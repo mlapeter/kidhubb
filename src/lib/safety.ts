@@ -1,9 +1,9 @@
 // Only block patterns that are clearly malicious.
-// The real security comes from iframe sandbox="allow-scripts allow-same-origin"
-// served from a separate subdomain (play.kidhubb.com) so allow-same-origin only
-// grants access to that origin, not the main site. CSP headers (connect-src 'none')
-// add another layer. These patterns are a lightweight first pass to catch obviously
-// bad intent — not a security boundary.
+// The real security comes from iframe sandbox="allow-scripts" (no allow-same-origin
+// for preview) and a separate subdomain (play.kidhubb.com) for production renders.
+// CSP headers (connect-src 'none', form-action 'none') add another layer. These
+// patterns are a lightweight first pass to catch obviously bad intent — not a
+// security boundary.
 const BLOCKED_PATTERNS: { pattern: RegExp; reason: string }[] = [
   // Crypto mining
   { pattern: /CoinHive/i, reason: "Crypto mining" },
@@ -12,6 +12,17 @@ const BLOCKED_PATTERNS: { pattern: RegExp; reason: string }[] = [
   // Parent frame escape attempts
   { pattern: /window\.parent/i, reason: "Parent window access" },
   { pattern: /window\.top\b/i, reason: "Top window access" },
+  { pattern: /window\.opener/i, reason: "Opener window access" },
+  { pattern: /parent\.postMessage/i, reason: "Parent frame messaging" },
+
+  // Cookie/storage theft
+  { pattern: /document\.cookie/i, reason: "Cookie access" },
+  { pattern: /localStorage/i, reason: "Local storage access" },
+  { pattern: /sessionStorage/i, reason: "Session storage access" },
+
+  // Redirect/exfiltration
+  { pattern: /<meta[^>]+http-equiv\s*=\s*["']?refresh/i, reason: "Meta redirect" },
+  { pattern: /<form[^>]+action\s*=\s*["']?https?:/i, reason: "External form action" },
 ];
 
 export interface ScanResult {
