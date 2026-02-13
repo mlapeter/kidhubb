@@ -7,6 +7,7 @@
 - **Preview still works without allow-same-origin** — Only blocks storage, cookies, and same-origin fetch. HTML/CSS/JS/Canvas all render fine.
 - **Reverted atomic RPC increments** — Postgres `increment_play_count`/`increment_like_count` functions were overkill. Simple read-modify-write is fine at current scale.
 - **CSP updated** — Added `form-action 'none'` (blocks form-based exfiltration) and `frame-ancestors *` (replaces non-standard `X-Frame-Options: ALLOWALL`).
-- **play.kidhubb.com not configured yet** — Subdomain isn't set up in Vercel. Games work locally but iframe fails on production. Needs Vercel domain config or architecture change.
+- **play.kidhubb.com is live** — Subdomain is configured in Vercel, game rendering via iframe works in production. Confirmed with Meteor Dodge game.
 - **Play page queries Supabase directly** — Removed self-fetch pattern (`fetch(baseUrl/api/games)`) that required constructing `VERCEL_URL`. Direct DB query is simpler and faster.
 - **Safety scanner is heuristic only** — Regex patterns catch obvious bad intent but aren't a security boundary. Real security = iframe sandbox + CSP + subdomain isolation.
+- **Removed localStorage/sessionStorage from blocked patterns** — AI-generated games commonly use these for scores/state. Sandbox already prevents cross-origin abuse. Was silently blocking publishes (error hidden below fold on iPad).

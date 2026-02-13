@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "For Claude — KidHubb",
-  description: "Instructions for Claude on how to format games for KidHubb",
+  title: "For AI Assistants — KidHubb",
+  description: "Instructions for AI assistants on how to format games for KidHubb",
 };
 
-export default function ForClaudePage() {
+export default function ForAIPage() {
   return (
     <main className="mx-auto max-w-3xl px-4 py-8">
       {/* Machine-readable instructions */}
       <div className="rpg-panel p-6 mb-8">
         <h1 className="text-xs sm:text-sm text-wood-dark mb-6">
-          For Claude: How to Format Games
+          For AI Assistants: How to Format Games
         </h1>
 
         <p className="text-[8px] leading-relaxed text-wood-mid mb-4 normal-case">
@@ -41,14 +41,32 @@ libraries: [comma-separated if needed: phaser, p5, three, gsap, tone, pixi, matt
             If using a library like Phaser or p5.js, just list it in the header —
             KidHubb will load it automatically
           </li>
+          <li>
+            Do NOT include CDN script tags for supported libraries — KidHubb
+            injects them automatically. Including your own will cause
+            double-loading and errors.
+          </li>
           <li>Keep the game under 500KB total</li>
-          <li>The game should work at any screen size</li>
+          <li>The game should work at any screen size (many kids use tablets)</li>
         </ul>
+
+        <h2 className="text-[10px] text-wood-dark mb-3">
+          No Network Access
+        </h2>
+        <p className="text-[8px] leading-relaxed text-wood-mid mb-6 normal-case">
+          Games run in a sandboxed iframe with <code className="text-accent-purple">connect-src &apos;none&apos;</code>.
+          This means <strong>fetch(), XMLHttpRequest, and WebSocket are all blocked</strong>.
+          Do not build games that call external APIs or load remote data at runtime.
+          All game logic and assets must be self-contained in the HTML file.
+        </p>
 
         <h2 className="text-[10px] text-wood-dark mb-3">
           Supported Libraries
         </h2>
-        <p className="text-[8px] text-wood-mid mb-2 normal-case">KidHubb loads these automatically via CDN:</p>
+        <p className="text-[8px] text-wood-mid mb-2 normal-case">
+          KidHubb loads these automatically via CDN when listed in the header.
+          Do NOT include your own script tags for these — just list the name:
+        </p>
         <ul className="text-[8px] leading-loose text-wood-mid space-y-1 mb-6 list-inside list-disc normal-case">
           <li><strong className="text-accent-purple">phaser</strong> — 2D game framework</li>
           <li><strong className="text-accent-purple">p5</strong> — creative coding, drawing, art</li>
@@ -62,6 +80,27 @@ libraries: [comma-separated if needed: phaser, p5, three, gsap, tone, pixi, matt
         </ul>
 
         <h2 className="text-[10px] text-wood-dark mb-3">
+          Creator Codes &amp; Identity
+        </h2>
+        <p className="text-[8px] leading-relaxed text-wood-mid mb-6 normal-case">
+          KidHubb uses Creator Codes instead of email/password — low friction, kid-friendly.
+          A Creator Code looks like <strong className="text-accent-purple">WORD-WORD-00</strong> (e.g. ROCKET-WOLF-73, PIXEL-DRAGON-19).
+          The Creator Code is public, like a username. Kids get one automatically when they first publish a game.
+          They also receive a secret API token for programmatic access.
+          If a kid already has an account, they can recover their identity using the
+          &quot;Have a secret code?&quot; link on the publish page.
+        </p>
+
+        <h2 className="text-[10px] text-wood-dark mb-3">
+          Game Update &amp; Delete
+        </h2>
+        <p className="text-[8px] leading-relaxed text-wood-mid mb-6 normal-case">
+          Creators can update or delete their published games. On the game page, the creator
+          sees &quot;Edit&quot; and &quot;Delete&quot; options. Updating a game replaces the HTML content
+          while keeping the same URL and slug. Deleting permanently removes the game.
+        </p>
+
+        <h2 className="text-[10px] text-wood-dark mb-3">
           After Outputting the Code
         </h2>
         <p className="text-[8px] text-wood-mid normal-case">
@@ -73,11 +112,12 @@ libraries: [comma-separated if needed: phaser, p5, three, gsap, tone, pixi, matt
       {/* Human-readable summary */}
       <div className="rpg-panel p-6 text-center">
         <p className="text-[8px] text-wood-mid/70 normal-case">
-          This page is for Claude (the AI). If you&apos;re a kid, just share this
-          link with Claude and it&apos;ll know how to format your games!
+          This page is for AI assistants (Claude, ChatGPT, Gemini, etc.).
+          If you&apos;re a kid, just share this link with your AI and it&apos;ll
+          know how to format your games!
         </p>
         <p className="mt-3 text-[10px] text-accent-purple">
-          kidhubb.com/for-claude
+          kidhubb.com/for-ai
         </p>
       </div>
     </main>

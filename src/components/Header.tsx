@@ -17,10 +17,16 @@ export default function Header() {
         </Link>
         <nav className="flex items-center gap-2 sm:gap-3">
           <Link
-            href="/play"
+            href="/for-ai"
             className="px-3 py-2 text-[10px] text-parchment/70 hover:text-accent-gold transition-colors"
           >
-            Play
+            For AI
+          </Link>
+          <Link
+            href="/play"
+            className="rpg-btn rpg-btn-purple px-3 sm:px-4 py-2 text-[10px]"
+          >
+            Play Games
           </Link>
           <Link
             href="/publish"

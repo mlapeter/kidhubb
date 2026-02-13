@@ -246,6 +246,15 @@
   .cloud-drift {
     animation: cloud-drift 6s ease-in-out infinite alternate;
   }
+
+  /* Visually hidden but readable by AI text extraction and screen readers */
+  .ai-info {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
 }
 
 /* ── Keyframes (outside layers) ── */
