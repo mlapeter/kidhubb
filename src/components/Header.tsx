@@ -18,7 +18,7 @@ export default function Header() {
         <nav className="flex items-center gap-2 sm:gap-3">
           <Link
             href="/for-ai"
-            className="px-3 py-2 text-[10px] text-parchment/70 hover:text-accent-gold transition-colors"
+            className="hidden sm:block px-3 py-2 text-[10px] text-parchment/70 hover:text-accent-gold transition-colors"
           >
             For AI
           </Link>
