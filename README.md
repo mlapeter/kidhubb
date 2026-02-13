@@ -14,7 +14,7 @@ A 7-year-old who's barely learned to read is using Claude on his iPad to create 
 
 **Every game is a single HTML file.** No build tools, no bundlers, no frameworks required. Just a self-contained document — the way the web was meant to work. Games are viewable, inspectable, and remixable. Popular libraries (Phaser, p5.js, Three.js, etc.) are injected automatically via CDN.
 
-**Identity without accounts.** No email, no passwords, no OAuth. Kids get a memorable creator code (like `ROCKET-WOLF-73`) that links to their creator name. It's stored in the browser and can be recovered on a new device. Low stakes by design — the worst case is making a new code.
+**Identity without accounts.** No email, no passwords, no OAuth. Kids get a memorable creator code (like `ROCKET-WOLF-COMET-73`) that links to their creator name. It's stored in the browser and can be recovered on a new device. Low stakes by design — the worst case is making a new code.
 
 **Security through sandboxing, not friction.** Games run in sandboxed iframes on a separate origin with `connect-src: 'none'` — they literally cannot make network requests. A lightweight content scanner catches obvious bad patterns. That's the security model. No CAPTCHA, no email verification, no gates between a kid and their creation.
 

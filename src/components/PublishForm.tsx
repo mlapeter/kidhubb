@@ -108,7 +108,6 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
     fetchGame();
   }, [updateSlug]);
 
-
   function handlePaste(code: string) {
     setRawCode(code);
     if (!code.trim()) {
@@ -239,9 +238,7 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
       const data = await res.json();
 
       if (!res.ok) {
-        const msg = data.warnings
-          ? `${data.error}: ${data.warnings.join(", ")}`
-          : data.error || "Failed to publish";
+        const msg = data.warnings ? `${data.error}: ${data.warnings.join(", ")}` : data.error || "Failed to publish";
         setError(msg);
         return;
       }
@@ -284,9 +281,7 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
       const data = await res.json();
 
       if (!res.ok) {
-        const msg = data.warnings
-          ? `${data.error}: ${data.warnings.join(", ")}`
-          : data.error || "Failed to update";
+        const msg = data.warnings ? `${data.error}: ${data.warnings.join(", ")}` : data.error || "Failed to update";
         setError(msg);
         return;
       }
@@ -337,8 +332,7 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
         {existingGame && (
           <div className="rpg-panel p-3 text-center">
             <p className="text-[10px] text-wood-mid/70">
-              Updating{" "}
-              <span className="text-accent-gold">{existingGame.title}</span>
+              Updating <span className="text-accent-gold">{existingGame.title}</span>
             </p>
             <p className="text-[10px] text-wood-mid/50 mt-1">Paste your new game code below</p>
           </div>
@@ -348,8 +342,7 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
         {!updateSlug && identity && (
           <div className="rpg-panel p-3 text-center">
             <p className="text-[10px] text-wood-mid/70">
-              Publishing as{" "}
-              <span className="text-wood-dark font-bold">{identity.display_name}</span>
+              Publishing as <span className="text-wood-dark font-bold">{identity.display_name}</span>
             </p>
           </div>
         )}
@@ -402,12 +395,8 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
           {!rawCode && !focused && (
             <div className="flex flex-col items-center justify-center py-16 gap-4">
               <span className="text-7xl">📋</span>
-              <p className="text-sm text-parchment/70">
-                Paste your game code
-              </p>
-              <p className="text-[10px] text-parchment/30">
-                Tap here to paste from clipboard
-              </p>
+              <p className="text-sm text-parchment/70">Paste your game code</p>
+              <p className="text-[10px] text-parchment/30">Tap here to paste from clipboard</p>
             </div>
           )}
         </div>
@@ -433,19 +422,17 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
                 onClick={() => setShowRecovery(true)}
                 className="text-[10px] text-parchment/30 hover:text-parchment/60"
               >
-                Have a secret code?
+                Have a creator code?
               </button>
             ) : (
               <div className="rpg-panel p-4 space-y-3 text-left">
-                <p className="text-[10px] text-wood-dark/70 text-center">
-                  Enter your secret code
-                </p>
+                <p className="text-[10px] text-wood-dark/70 text-center">Enter your creator code</p>
                 <div className="flex gap-2">
                   <input
                     type="text"
                     value={recoveryCode}
                     onChange={(e) => setRecoveryCode(e.target.value)}
-                    placeholder="WORD-WORD-00"
+                    placeholder="WORD-WORD-WORD-00"
                     className="flex-1 border-4 border-wood-mid bg-parchment-dark px-3 py-2 text-[10px] text-wood-dark placeholder:text-wood-mid/40 focus:outline-none focus:border-accent-purple"
                     onKeyDown={(e) => {
                       if (e.key === "Enter") handleRecovery();
@@ -459,9 +446,7 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
                     {recovering ? "..." : "Go"}
                   </button>
                 </div>
-                {recoveryError && (
-                  <p className="text-[10px] text-accent-red">{recoveryError}</p>
-                )}
+                {recoveryError && <p className="text-[10px] text-accent-red">{recoveryError}</p>}
                 <button
                   onClick={() => {
                     setShowRecovery(false);
@@ -491,32 +476,20 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
         </h2>
 
         <div className="rpg-panel p-5 space-y-3">
-          <p className="text-[10px] text-wood-mid/70">
-            Your secret code is
-          </p>
-          <p className="text-sm sm:text-base text-accent-purple pixel-pulse">
-            {identity.creator_code}
-          </p>
+          <p className="text-[10px] text-wood-mid/70">Your creator code is</p>
+          <p className="text-sm sm:text-base text-accent-purple pixel-pulse">{identity.creator_code}</p>
           <p className="text-[10px] text-wood-mid/50 normal-case">
             Save this! You need it to publish from other devices
           </p>
         </div>
 
-        <button
-          onClick={copySecretCode}
-          className="rpg-btn w-full px-6 py-4 text-[10px]"
-        >
-          {codeCopied ? "✓ Copied!" : "📋 Copy Secret Code"}
+        <button onClick={copySecretCode} className="rpg-btn w-full px-6 py-4 text-[10px]">
+          {codeCopied ? "✓ Copied!" : "📋 Copy Creator Code"}
         </button>
 
-        <p className="text-[10px] text-parchment/40">
-          Tip: Paste it in your AI chat so it remembers for you
-        </p>
+        <p className="text-[10px] text-parchment/40">Tip: Paste it in your AI chat so it remembers for you</p>
 
-        <button
-          onClick={proceedToConfirm}
-          className="rpg-btn rpg-btn-purple w-full px-6 py-4 text-[10px]"
-        >
+        <button onClick={proceedToConfirm} className="rpg-btn rpg-btn-purple w-full px-6 py-4 text-[10px]">
           ▶ Continue to publish
         </button>
       </div>
@@ -528,7 +501,8 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
     return (
       <div className="mx-auto max-w-2xl space-y-5 pb-16">
         {/* Preview */}
-        <div className="pixel-border-green bg-black"
+        <div
+          className="pixel-border-green bg-black"
           style={{ boxShadow: "inset 0 0 0 2px rgba(0,0,0,0.5), 6px 6px 0 rgba(0,0,0,0.3)" }}
         >
           <iframe
@@ -576,14 +550,15 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
           className="rpg-btn rpg-btn-green w-full px-6 py-5 text-xs disabled:opacity-50"
         >
           {loading
-            ? (updateSlug ? "Updating..." : "Publishing...")
-            : (updateSlug ? "✏️ Update My Game!" : "🚀 Publish My Game!")}
+            ? updateSlug
+              ? "Updating..."
+              : "Publishing..."
+            : updateSlug
+              ? "✏️ Update My Game!"
+              : "🚀 Publish My Game!"}
         </button>
 
-        <button
-          onClick={reset}
-          className="mx-auto block text-[10px] text-parchment/30 hover:text-parchment/60"
-        >
+        <button onClick={reset} className="mx-auto block text-[10px] text-parchment/30 hover:text-parchment/60">
           ← Start over
         </button>
       </div>
@@ -610,10 +585,7 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
             className="flex-1 bg-transparent text-[10px] text-wood-dark outline-none normal-case"
             aria-label="Game URL"
           />
-          <button
-            onClick={copyUrl}
-            className="rpg-btn rpg-btn-purple px-3 py-2 text-[10px]"
-          >
+          <button onClick={copyUrl} className="rpg-btn rpg-btn-purple px-3 py-2 text-[10px]">
             {copied ? "✓" : "Copy"}
           </button>
         </div>
@@ -626,10 +598,7 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
             {updateSlug ? "← Back to Game" : "▶ Play It"}
           </a>
           {!updateSlug && (
-            <button
-              onClick={reset}
-              className="rpg-btn flex-1 px-4 py-3 text-[10px] text-center"
-            >
+            <button onClick={reset} className="rpg-btn flex-1 px-4 py-3 text-[10px] text-center">
               🎮 Make Another
             </button>
           )}

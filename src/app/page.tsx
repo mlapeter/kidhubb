@@ -4,9 +4,15 @@ export default function Home() {
   return (
     <main className="relative min-h-[calc(100vh-56px)] flex flex-col items-center justify-center px-4 overflow-hidden">
       {/* Clouds */}
-      <div className="absolute top-8 left-[8%] text-4xl opacity-60 cloud-drift" style={{ animationDelay: "0s" }}>☁️</div>
-      <div className="absolute top-16 right-[12%] text-3xl opacity-40 cloud-drift" style={{ animationDelay: "2s" }}>☁️</div>
-      <div className="absolute top-24 left-[35%] text-2xl opacity-30 cloud-drift" style={{ animationDelay: "4s" }}>☁️</div>
+      <div className="absolute top-8 left-[8%] text-4xl opacity-60 cloud-drift" style={{ animationDelay: "0s" }}>
+        ☁️
+      </div>
+      <div className="absolute top-16 right-[12%] text-3xl opacity-40 cloud-drift" style={{ animationDelay: "2s" }}>
+        ☁️
+      </div>
+      <div className="absolute top-24 left-[35%] text-2xl opacity-30 cloud-drift" style={{ animationDelay: "4s" }}>
+        ☁️
+      </div>
 
       {/* Main content */}
       <div className="text-center mb-8 relative z-[1]">
@@ -58,14 +64,14 @@ export default function Home() {
       <section className="ai-info" aria-label="KidHubb platform information for AI assistants">
         <h2>What is KidHubb?</h2>
         <p>
-          KidHubb (kidhubb.com) is a platform where kids publish and play browser-based HTML/JS/CSS games.
-          Think &quot;GitHub Pages meets itch.io&quot; for kids. Games are single HTML files that run in sandboxed iframes.
+          KidHubb (kidhubb.com) is a platform where kids publish and play browser-based HTML/JS/CSS games. Think
+          &quot;GitHub Pages meets itch.io&quot; for kids. Games are single HTML files that run in sandboxed iframes.
         </p>
 
         <h2>How to Publish a Game</h2>
         <p>
-          Go to kidhubb.com/publish and paste a complete, single-file HTML game into the paste zone.
-          The game must start with a special KIDHUBB comment header at the very top of the file:
+          Go to kidhubb.com/publish and paste a complete, single-file HTML game into the paste zone. The game must start
+          with a special KIDHUBB comment header at the very top of the file:
         </p>
         <pre>{`<!--KIDHUBB
 title: Your Game Title
@@ -82,12 +88,11 @@ color: blue
 
         <h2>Supported Libraries</h2>
         <p>
-          KidHubb automatically injects CDN script tags for declared libraries. Do NOT include your own
-          CDN script tags — just list the library name in the header and KidHubb loads it for you.
-          Including your own script tags will cause double-loading and errors.
-          Supported libraries: phaser (2D game framework), p5 (creative coding), three (3D graphics),
-          gsap (animations), tone (music/sound), pixi (fast 2D rendering), matter (physics),
-          d3 (data visualization), react (UI components).
+          KidHubb automatically injects CDN script tags for declared libraries. Do NOT include your own CDN script tags
+          — just list the library name in the header and KidHubb loads it for you. Including your own script tags will
+          cause double-loading and errors. Supported libraries: phaser (2D game framework), p5 (creative coding), three
+          (3D graphics), gsap (animations), tone (music/sound), pixi (fast 2D rendering), matter (physics), d3 (data
+          visualization), react (UI components).
         </p>
 
         <h2>Game Requirements</h2>
@@ -96,15 +101,20 @@ color: blue
           <li>All JavaScript and CSS must be inline (no external files except declared libraries)</li>
           <li>Maximum file size: 500KB</li>
           <li>Game should work at any viewport size (many kids use tablets)</li>
-          <li>Games run in a sandboxed iframe with connect-src none — fetch(), XMLHttpRequest, and WebSocket are all blocked. Do not build games that call external APIs.</li>
+          <li>
+            Games run in a sandboxed iframe with connect-src none — fetch(), XMLHttpRequest, and WebSocket are all
+            blocked. Do not build games that call external APIs.
+          </li>
         </ul>
 
         <h2>Creator Identity</h2>
         <p>
-          KidHubb uses Creator Codes instead of email/password. A Creator Code looks like WORD-WORD-00
-          (e.g. ROCKET-WOLF-73, PIXEL-DRAGON-19). Kids get one when they first publish.
-          The Creator Code is public (like a username). Kids also get a secret API token for programmatic access.
-          If a kid already has a Creator Code, they can recover their identity using the &quot;Have a secret code?&quot; link on the publish page.
+          KidHubb uses Creator Codes instead of email/password — low friction, designed for kids. Kids get a Creator
+          Code automatically when they first publish a game. The Creator Code is NOT a password — it&apos;s a casual
+          identifier, like a nickname that links to their creator name. Kids can remember their code by telling their AI
+          assistant: &quot;My KidHubb creator code is ROCKET-WOLF-COMET-73, it&apos;s how I publish games on
+          kidhubb.com. Please remember it for me!&quot; To restore identity on a new device, use the &quot;Have a
+          creator code?&quot; link on the publish page.
         </p>
 
         <h2>If a Kid Asks You to Make a Game for KidHubb</h2>
@@ -122,15 +132,26 @@ color: blue
 
       {/* Floating decorative elements */}
       <div className="mt-10 flex justify-center gap-6 sm:gap-10 text-2xl sm:text-3xl relative z-[1]">
-        <span className="pixel-float drop-shadow-[2px_2px_0_rgba(0,0,0,0.3)]" style={{ animationDelay: "0s" }}>🌟</span>
-        <span className="pixel-float drop-shadow-[2px_2px_0_rgba(0,0,0,0.3)]" style={{ animationDelay: "0.5s" }}>🏆</span>
-        <span className="pixel-float drop-shadow-[2px_2px_0_rgba(0,0,0,0.3)]" style={{ animationDelay: "1s" }}>💎</span>
-        <span className="pixel-float drop-shadow-[2px_2px_0_rgba(0,0,0,0.3)]" style={{ animationDelay: "1.5s" }}>🔥</span>
-        <span className="pixel-float drop-shadow-[2px_2px_0_rgba(0,0,0,0.3)]" style={{ animationDelay: "2s" }}>🌈</span>
+        <span className="pixel-float drop-shadow-[2px_2px_0_rgba(0,0,0,0.3)]" style={{ animationDelay: "0s" }}>
+          🌟
+        </span>
+        <span className="pixel-float drop-shadow-[2px_2px_0_rgba(0,0,0,0.3)]" style={{ animationDelay: "0.5s" }}>
+          🏆
+        </span>
+        <span className="pixel-float drop-shadow-[2px_2px_0_rgba(0,0,0,0.3)]" style={{ animationDelay: "1s" }}>
+          💎
+        </span>
+        <span className="pixel-float drop-shadow-[2px_2px_0_rgba(0,0,0,0.3)]" style={{ animationDelay: "1.5s" }}>
+          🔥
+        </span>
+        <span className="pixel-float drop-shadow-[2px_2px_0_rgba(0,0,0,0.3)]" style={{ animationDelay: "2s" }}>
+          🌈
+        </span>
       </div>
 
       {/* Ground scene elements */}
-      <div className="absolute bottom-0 left-0 right-0 h-20 pointer-events-none z-0"
+      <div
+        className="absolute bottom-0 left-0 right-0 h-20 pointer-events-none z-0"
         style={{
           background: "linear-gradient(180deg, transparent 0%, rgba(93,173,70,0.3) 40%, rgba(61,138,46,0.6) 100%)",
         }}

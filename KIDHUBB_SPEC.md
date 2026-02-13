@@ -58,7 +58,7 @@ If the subdomain approach adds too much initial complexity, start with `srcdoc` 
 CREATE TABLE creators (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   display_name TEXT NOT NULL UNIQUE,
-  creator_code TEXT NOT NULL UNIQUE, -- e.g. "METEOR-FOX-42"
+  creator_code TEXT NOT NULL UNIQUE, -- e.g. "METEOR-FOX-BLAZE-42"
   api_token TEXT NOT NULL UNIQUE,    -- hashed, for API auth
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -115,9 +115,9 @@ No email. No password. No OAuth. Just a memorable code.
 
 1. Kid goes to `/publish` (or hits `POST /api/auth/register`)
 2. Picks a **display name** (e.g. "CosmicCoder")
-3. System generates a **Creator Code**: `WORD-WORD-NUMBER` format
-   - Example: `ROCKET-WOLF-73`, `PIXEL-DRAGON-19`
-   - Word lists: ~200 fun, kid-friendly words (animals, space, colors, etc.)
+3. System generates a **Creator Code**: `WORD-WORD-WORD-NUMBER` format
+   - Example: `ROCKET-WOLF-COMET-73`, `PIXEL-DRAGON-QUEST-19`
+   - Word lists: ~200 fun, kid-friendly words (adjectives + nouns — animals, space, colors, etc.)
    - Number: 10–99
    - Check for uniqueness before issuing
 4. System also generates an **API token** (UUID v4, stored hashed)

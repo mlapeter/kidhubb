@@ -37,7 +37,7 @@ KidHubb is an experiment in how humans, AI, and websites interact. It's one of t
 ### Key Architecture Decisions
 
 - **Game serving:** Games render in sandboxed iframes via `play.kidhubb.com` subdomain (separate origin for security). Main site at `kidhubb.com` embeds `<iframe src="https://play.kidhubb.com/render/{slug}">` with `sandbox="allow-scripts"` only.
-- **Identity:** No email/password/OAuth. Kids get a Creator Code (`WORD-WORD-NUMBER` format) and an API token. Low friction, low stakes.
+- **Identity:** No email/password/OAuth. Kids get a Creator Code (`WORD-WORD-WORD-NUMBER` format, e.g. `ROCKET-WOLF-COMET-73`) and an API token. Low friction, low stakes.
 - **Content safety:** Iframe sandbox + CSP headers (`connect-src 'none'`) are the real security. Regex-based content scanning is a first-line heuristic only.
 - **Library injection:** Games can declare library dependencies (Three.js, Phaser, p5.js, etc.) which get injected as CDN script tags in `<head>` at render time.
 - **Game content** is stored as raw HTML in a separate `game_content` table to keep metadata queries fast.

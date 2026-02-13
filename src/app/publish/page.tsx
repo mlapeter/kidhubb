@@ -54,8 +54,8 @@ color: blue
         <h2>What Happens After Pasting</h2>
         <p>
           After pasting, the game preview loads automatically. The kid can edit the title and description,
-          then click Publish. They will get a Creator Code (like ROCKET-WOLF-73) if they are new,
-          or can enter their existing secret code to publish under their existing identity.
+          then click Publish. They will get a Creator Code (like ROCKET-WOLF-COMET-73) if they are new,
+          or can enter their existing creator code to publish under their existing identity.
         </p>
 
         <p>For full details, visit kidhubb.com/for-ai</p>

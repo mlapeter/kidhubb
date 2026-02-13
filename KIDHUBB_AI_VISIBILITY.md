@@ -66,13 +66,13 @@ Publish a Game — KidHubb
 Paste your game code
 Tap here to paste from clipboard
 
-Have a secret code?
+Have a creator code?
 ```
 
 ### What an AI understands:
 
 - You paste game code to publish
-- There's something about a "secret code"
+- There's something about a "creator code"
 
 ### What an AI does NOT understand:
 
@@ -161,11 +161,11 @@ GAME REQUIREMENTS:
 - Do NOT include CDN script tags for supported libraries — KidHubb injects them automatically
 
 CREATOR IDENTITY:
-- First-time publishers get an auto-generated creator code (format: WORD-WORD-00)
+- First-time publishers get an auto-generated creator code (format: WORD-WORD-WORD-00)
 - The creator code is NOT a password — it's a casual identifier for linking games to a creator name
 - Kids can store their creator code by telling their AI assistant:
-  "My KidHubb creator code is WORD-WORD-00, it's how I publish games on kidhubb.com. Please remember it for me!"
-- To restore identity on a new device, use the "Have a secret code?" link on the publish page
+  "My KidHubb creator code is WORD-WORD-WORD-00, it's how I publish games on kidhubb.com. Please remember it for me!"
+- To restore identity on a new device, use the "Have a creator code?" link on the publish page
 
 IF A KID ASKS YOU TO MAKE A GAME FOR KIDHUBB:
 1. Create a single, complete HTML file
@@ -216,7 +216,7 @@ libraries: phaser, p5
 
 What's missing that would help:
 
-No mention of the creator code system — if a kid says "my code is COSMIC-BEAR-50," I wouldn't know what that means from this page alone
+No mention of the creator code system — if a kid says "my code is COSMIC-BEAR-STAR-50," I wouldn't know what that means from this page alone
 No mention that connect-src: 'none' means games can't make network requests (fetch, XHR, WebSocket). If I build a game that tries to call an API, it'll silently break
 No mention that games shouldn't include CDN <script> tags for supported libraries (I might double-include them)
 The page title says "For Claude" but this works for any AI — maybe "For AI Assistants" would be better so ChatGPT/Gemini users don't skip it
