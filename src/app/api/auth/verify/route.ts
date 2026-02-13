@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
 
 export async function POST(request: NextRequest) {
+  if (!rateLimit(getClientIp(request), { maxRequests: 10 })) {
+    return NextResponse.json({ error: "Too many requests — slow down!" }, { status: 429 });
+  }
+
   try {
     const body = await request.json();
     const creatorCode = body.creator_code?.trim()?.toUpperCase();
@@ -15,7 +20,7 @@ export async function POST(request: NextRequest) {
 
     const { data: creator } = await supabase
       .from("creators")
-      .select("creator_code, display_name")
+      .select("id, creator_code, display_name")
       .eq("creator_code", creatorCode)
       .single();
 
@@ -27,6 +32,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({
+      id: creator.id,
       creator_code: creator.creator_code,
       display_name: creator.display_name,
     });

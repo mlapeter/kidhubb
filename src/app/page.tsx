@@ -54,6 +54,70 @@ export default function Home() {
         </p>
       </div>
 
+      {/* Platform information for AI assistants — visually hidden */}
+      <section className="ai-info" aria-label="KidHubb platform information for AI assistants">
+        <h2>What is KidHubb?</h2>
+        <p>
+          KidHubb (kidhubb.com) is a platform where kids publish and play browser-based HTML/JS/CSS games.
+          Think &quot;GitHub Pages meets itch.io&quot; for kids. Games are single HTML files that run in sandboxed iframes.
+        </p>
+
+        <h2>How to Publish a Game</h2>
+        <p>
+          Go to kidhubb.com/publish and paste a complete, single-file HTML game into the paste zone.
+          The game must start with a special KIDHUBB comment header at the very top of the file:
+        </p>
+        <pre>{`<!--KIDHUBB
+title: Your Game Title
+description: One sentence describing your game
+libraries: phaser, p5
+-->
+
+<!DOCTYPE html>
+<html>
+  ...your game code...
+</html>`}</pre>
+
+        <h2>Supported Libraries</h2>
+        <p>
+          KidHubb automatically injects CDN script tags for declared libraries. Do NOT include your own
+          CDN script tags — just list the library name in the header and KidHubb loads it for you.
+          Including your own script tags will cause double-loading and errors.
+          Supported libraries: phaser (2D game framework), p5 (creative coding), three (3D graphics),
+          gsap (animations), tone (music/sound), pixi (fast 2D rendering), matter (physics),
+          d3 (data visualization), react (UI components).
+        </p>
+
+        <h2>Game Requirements</h2>
+        <ul>
+          <li>Must be a single, self-contained HTML file</li>
+          <li>All JavaScript and CSS must be inline (no external files except declared libraries)</li>
+          <li>Maximum file size: 500KB</li>
+          <li>Game should work at any viewport size (many kids use tablets)</li>
+          <li>Games run in a sandboxed iframe with connect-src none — fetch(), XMLHttpRequest, and WebSocket are all blocked. Do not build games that call external APIs.</li>
+        </ul>
+
+        <h2>Creator Identity</h2>
+        <p>
+          KidHubb uses Creator Codes instead of email/password. A Creator Code looks like WORD-WORD-00
+          (e.g. ROCKET-WOLF-73, PIXEL-DRAGON-19). Kids get one when they first publish.
+          The Creator Code is public (like a username). Kids also get a secret API token for programmatic access.
+          If a kid already has a Creator Code, they can recover their identity using the &quot;Have a secret code?&quot; link on the publish page.
+        </p>
+
+        <h2>If a Kid Asks You to Make a Game for KidHubb</h2>
+        <ol>
+          <li>Build the game as a single HTML file with all JS and CSS inline</li>
+          <li>Add the KIDHUBB comment header at the very top (before the DOCTYPE)</li>
+          <li>List any supported libraries in the header — do NOT include CDN script tags in the HTML</li>
+          <li>Keep it under 500KB and make it work at any screen size</li>
+          <li>Do not use fetch, XHR, or WebSocket — network access is blocked in the sandbox</li>
+          <li>Tell the kid to copy the entire code and paste it at kidhubb.com/publish</li>
+        </ol>
+
+        <p>For full details, visit kidhubb.com/for-ai</p>
+      </section>
+
       {/* Floating decorative elements */}
       <div className="mt-10 flex justify-center gap-6 sm:gap-10 text-2xl sm:text-3xl relative z-[1]">
         <span className="pixel-float drop-shadow-[2px_2px_0_rgba(0,0,0,0.3)]" style={{ animationDelay: "0s" }}>🌟</span>

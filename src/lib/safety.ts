@@ -15,10 +15,8 @@ const BLOCKED_PATTERNS: { pattern: RegExp; reason: string }[] = [
   { pattern: /window\.opener/i, reason: "Opener window access" },
   { pattern: /parent\.postMessage/i, reason: "Parent frame messaging" },
 
-  // Cookie/storage theft
+  // Cookie theft (localStorage/sessionStorage are fine — sandbox blocks access anyway)
   { pattern: /document\.cookie/i, reason: "Cookie access" },
-  { pattern: /localStorage/i, reason: "Local storage access" },
-  { pattern: /sessionStorage/i, reason: "Session storage access" },
 
   // Redirect/exfiltration
   { pattern: /<meta[^>]+http-equiv\s*=\s*["']?refresh/i, reason: "Meta redirect" },

@@ -4,7 +4,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-KidHubb (kidhubb.com) is a platform where kids publish and play browser-based HTML/JS/CSS games. Think "GitHub Pages meets itch.io" for kids. The full spec is in KIDHUBB_SPEC.md.
+KidHubb (kidhubb.com) is a platform where kids publish and play browser-based HTML/JS/CSS games. Think "GitHub Pages meets itch.io" for kids.
+
+## The Soul of KidHubb
+
+KidHubb exists to give kids the shortest possible path from "I made something" to "other people can play it." A 7-year-old who can barely read is using AI to create real, playable browser games — and this site lets him share them with the world by copying code and pasting it into a big text box. That's the entire product. If a feature makes that path longer, more confusing, or more intimidating, it doesn't belong here.
+
+## Security vs. Simplicity
+
+This is not a banking app. No money changes hands, no personal data is collected, no emails are stored. The worst-case scenario for a security breach is that someone publishes a game under another kid's name — that's it. Games run in sandboxed iframes with no network access, which handles the real security concern (malicious code). Everything else should lean toward simplicity. Do not add email verification, OAuth, password requirements, CAPTCHA, or any other friction to the identity system. Creator codes are casual identifiers, not credentials — treat them like nicknames, not passwords. When you feel the urge to add a security measure, ask: "Would a 7-year-old on an iPad be able to get through this without help?" If the answer is no, don't add it.
+
+## What This Project Is Really About
+
+KidHubb is an experiment in how humans, AI, and websites interact. It's one of the first sites designed with AI assistants as a first-class audience — the /for-ai page, the hidden AI-context blocks, the KidHubb header format, the source code pages. We're inventing how AI agents discover, understand, and help users interact with a publishing platform. The codebase should reflect this: clean, simple, readable, and open-source friendly. No unnecessary abstractions, no over-engineered patterns. If you can do something in 20 lines, don't do it in 100. The goal is a codebase that a curious developer (or a curious kid, someday) can read and understand.
 
 ## Commands
 
