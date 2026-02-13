@@ -27,7 +27,7 @@ export default function Home() {
         <div className="flex flex-col gap-4">
           <Link
             href="/publish"
-            className="rpg-btn rpg-btn-purple px-6 py-5 text-xs sm:text-sm flex items-center justify-center gap-3"
+            className="rpg-btn rpg-btn-green px-6 py-5 text-xs sm:text-sm flex items-center justify-center gap-3"
           >
             <span className="text-xl">🚀</span>
             <span>Create Game</span>
@@ -35,7 +35,7 @@ export default function Home() {
 
           <Link
             href="/play"
-            className="rpg-btn rpg-btn-green px-6 py-5 text-xs sm:text-sm flex items-center justify-center gap-3"
+            className="rpg-btn rpg-btn-purple px-6 py-5 text-xs sm:text-sm flex items-center justify-center gap-3"
           >
             <span className="text-xl">👾</span>
             <span>Play Games</span>
@@ -49,7 +49,7 @@ export default function Home() {
           <span className="block w-8 h-[2px] bg-parchment-border" />
         </div>
 
-        <p className="mt-3 text-[8px] text-wood-mid/60 normal-case">
+        <p className="mt-3 text-[10px] text-wood-mid/60 normal-case">
           A place where kids publish &amp; play browser games
         </p>
       </div>
@@ -71,6 +71,8 @@ export default function Home() {
 title: Your Game Title
 description: One sentence describing your game
 libraries: phaser, p5
+emoji: 🚀
+color: blue
 -->
 
 <!DOCTYPE html>

@@ -30,6 +30,8 @@ export default async function PublishPage({ searchParams }: Props) {
 title: Your Game Title
 description: One sentence describing your game
 libraries: phaser, p5
+emoji: 🚀
+color: blue
 -->
 
 <!DOCTYPE html>

@@ -6,6 +6,8 @@ interface GameCardProps {
   creatorName: string;
   playCount: number;
   likeCount: number;
+  emoji?: string | null;
+  color?: string | null;
 }
 
 const THUMB_STYLES = [
@@ -29,14 +31,29 @@ function pickStyle(title: string) {
   return THUMB_STYLES[Math.abs(hash) % THUMB_STYLES.length];
 }
 
+const COLOR_GRADIENTS: Record<string, string> = {
+  red: "linear-gradient(135deg, #dc2626 0%, #f97316 100%)",
+  orange: "linear-gradient(135deg, #ea580c 0%, #facc15 100%)",
+  green: "linear-gradient(135deg, #16a34a 0%, #84cc16 100%)",
+  blue: "linear-gradient(135deg, #2563eb 0%, #06b6d4 100%)",
+  purple: "linear-gradient(135deg, #7c3aed 0%, #ec4899 100%)",
+  pink: "linear-gradient(135deg, #db2777 0%, #f97316 100%)",
+  teal: "linear-gradient(135deg, #0d9488 0%, #22d3ee 100%)",
+  gold: "linear-gradient(135deg, #ca8a04 0%, #f59e0b 100%)",
+};
+
 export default function GameCard({
   slug,
   title,
   creatorName,
   playCount,
   likeCount,
+  emoji,
+  color,
 }: GameCardProps) {
-  const style = pickStyle(title);
+  const fallback = pickStyle(title);
+  const displayEmoji = emoji || fallback.emoji;
+  const displayBg = (color && COLOR_GRADIENTS[color]) || fallback.bg;
 
   return (
     <Link href={`/play/${slug}`} className="group">
@@ -44,7 +61,7 @@ export default function GameCard({
         {/* Thumbnail with gradient + pattern overlay */}
         <div
           className="aspect-video flex items-center justify-center relative overflow-hidden"
-          style={{ background: style.bg }}
+          style={{ background: displayBg }}
         >
           {/* Subtle pixel grid overlay */}
           <div
@@ -54,17 +71,17 @@ export default function GameCard({
             }}
           />
           <span className="text-4xl relative z-[1] transition-transform group-hover:scale-125 drop-shadow-[2px_2px_0_rgba(0,0,0,0.3)]">
-            {style.emoji}
+            {displayEmoji}
           </span>
         </div>
 
         {/* Info area on parchment */}
         <div className="p-3">
           <h3 className="truncate text-[10px] text-wood-dark leading-relaxed">{title}</h3>
-          <p className="mt-1 text-[8px] text-wood-mid/70 normal-case">
+          <p className="mt-1 text-[10px] text-wood-mid/70 normal-case">
             by {creatorName}
           </p>
-          <div className="mt-2 flex items-center gap-3 text-[8px] text-wood-mid/50">
+          <div className="mt-2 flex items-center gap-3 text-[10px] text-wood-mid/50">
             <span>♥ {likeCount}</span>
             <span>▶ {playCount}</span>
           </div>

@@ -6,7 +6,7 @@ import GameBrowser from "@/components/GameBrowser";
 async function getGames() {
   const { data: games } = await supabase
     .from("games")
-    .select("id, slug, title, creator_id, play_count, like_count")
+    .select("id, slug, title, creator_id, play_count, like_count, emoji, color")
     .eq("status", "active")
     .order("created_at", { ascending: false })
     .limit(40);
@@ -35,6 +35,8 @@ async function getGames() {
     creator_name: creatorsMap[game.creator_id] || "Unknown",
     play_count: game.play_count,
     like_count: game.like_count,
+    emoji: game.emoji,
+    color: game.color,
   }));
 }
 

@@ -5,4 +5,6 @@ export interface Game {
   creator_name: string;
   play_count: number;
   like_count: number;
+  emoji?: string | null;
+  color?: string | null;
 }
