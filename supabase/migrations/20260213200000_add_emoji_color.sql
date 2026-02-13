@@ -1,0 +1,2 @@
+ALTER TABLE games ADD COLUMN emoji TEXT;
+ALTER TABLE games ADD COLUMN color TEXT;

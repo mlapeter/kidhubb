@@ -1,9 +1,14 @@
 import { VALID_LIBRARY_KEYS } from "./libraries";
 
+export const VALID_COLORS = ["red", "orange", "green", "blue", "purple", "pink", "teal", "gold"] as const;
+export type GameColor = (typeof VALID_COLORS)[number];
+
 export interface ParsedGame {
   title?: string;
   description?: string;
   libraries: string[];
+  emoji?: string;
+  color?: GameColor;
   gameHtml: string;
 }
 
@@ -37,6 +42,13 @@ export function parseKidHubbHeader(code: string): ParsedGame {
         result.title = value.trim();
       } else if (key === "description") {
         result.description = value.trim();
+      } else if (key === "emoji") {
+        result.emoji = value.trim();
+      } else if (key === "color") {
+        const c = value.trim().toLowerCase();
+        if (VALID_COLORS.includes(c as GameColor)) {
+          result.color = c as GameColor;
+        }
       }
     }
   }

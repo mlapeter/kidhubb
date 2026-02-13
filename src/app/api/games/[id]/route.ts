@@ -3,6 +3,7 @@ import { supabase } from "@/lib/supabase";
 import { authenticateCreator } from "@/lib/auth";
 import { scanGameContent, MAX_HTML_SIZE, MAX_TITLE_LENGTH, MAX_DESCRIPTION_LENGTH } from "@/lib/safety";
 import { VALID_LIBRARY_KEYS } from "@/lib/libraries";
+import { VALID_COLORS, type GameColor } from "@/lib/parse-game";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import crypto from "crypto";
 
@@ -14,7 +15,7 @@ export async function GET(
 
   const { data: game, error } = await supabase
     .from("games")
-    .select("id, slug, title, description, creator_id, libraries, play_count, like_count, status, created_at")
+    .select("id, slug, title, description, creator_id, libraries, play_count, like_count, emoji, color, status, created_at")
     .eq("id", id)
     .single();
 
@@ -95,6 +96,8 @@ export async function PUT(
     const libraries = body.libraries
       ? (body.libraries as string[]).filter((l) => VALID_LIBRARY_KEYS.includes(l))
       : undefined;
+    const emoji = body.emoji?.trim() || undefined;
+    const color = VALID_COLORS.includes(body.color as GameColor) ? body.color : undefined;
 
     if (title && title.length > MAX_TITLE_LENGTH) {
       return NextResponse.json({ error: `Title must be under ${MAX_TITLE_LENGTH} characters` }, { status: 400 });
@@ -129,6 +132,8 @@ export async function PUT(
     if (title) gameUpdate.title = title;
     if (description !== undefined) gameUpdate.description = description;
     if (libraries) gameUpdate.libraries = libraries;
+    if (emoji) gameUpdate.emoji = emoji;
+    if (color) gameUpdate.color = color;
 
     const { data: updatedGame, error: gameError } = await supabase
       .from("games")

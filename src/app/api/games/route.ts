@@ -4,6 +4,7 @@ import { authenticateCreator } from "@/lib/auth";
 import { generateSlug } from "@/lib/slug";
 import { scanGameContent, MAX_HTML_SIZE, MAX_TITLE_LENGTH, MAX_DESCRIPTION_LENGTH } from "@/lib/safety";
 import { VALID_LIBRARY_KEYS } from "@/lib/libraries";
+import { VALID_COLORS, type GameColor } from "@/lib/parse-game";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import crypto from "crypto";
 
@@ -20,7 +21,7 @@ export async function GET(request: NextRequest) {
 
   const { data: games, error, count } = await supabase
     .from("games")
-    .select("id, slug, title, description, creator_id, libraries, play_count, like_count, created_at", { count: "exact" })
+    .select("id, slug, title, description, creator_id, libraries, play_count, like_count, emoji, color, created_at", { count: "exact" })
     .eq("status", "active")
     .order(orderColumn, { ascending: false })
     .range(offset, offset + limit - 1);
@@ -98,6 +99,8 @@ export async function POST(request: NextRequest) {
     const libraries = (body.libraries || []).filter((l: string) =>
       VALID_LIBRARY_KEYS.includes(l)
     );
+    const emoji = body.emoji?.trim() || null;
+    const color = VALID_COLORS.includes(body.color as GameColor) ? body.color : null;
 
     // Validate
     if (title.length > MAX_TITLE_LENGTH) {
@@ -166,6 +169,8 @@ export async function POST(request: NextRequest) {
         description,
         creator_id: creatorId,
         libraries,
+        emoji,
+        color,
       })
       .select("id, slug, title, description, created_at")
       .single();

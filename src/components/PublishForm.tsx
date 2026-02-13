@@ -231,6 +231,8 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
           description: description.trim() || undefined,
           html: parsed.gameHtml,
           libraries: parsed.libraries,
+          emoji: parsed.emoji || undefined,
+          color: parsed.color || undefined,
         }),
       });
 
@@ -274,6 +276,8 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
           description: description.trim() || undefined,
           html: parsed.gameHtml,
           libraries: parsed.libraries,
+          emoji: parsed.emoji || undefined,
+          color: parsed.color || undefined,
         }),
       });
 
@@ -336,7 +340,7 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
               Updating{" "}
               <span className="text-accent-gold">{existingGame.title}</span>
             </p>
-            <p className="text-[8px] text-wood-mid/50 mt-1">Paste your new game code below</p>
+            <p className="text-[10px] text-wood-mid/50 mt-1">Paste your new game code below</p>
           </div>
         )}
 
@@ -345,7 +349,7 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
           <div className="rpg-panel p-3 text-center">
             <p className="text-[10px] text-wood-mid/70">
               Publishing as{" "}
-              <span className="text-accent-purple">{identity.display_name}</span>
+              <span className="text-wood-dark font-bold">{identity.display_name}</span>
             </p>
           </div>
         )}
@@ -493,7 +497,7 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
           <p className="text-sm sm:text-base text-accent-purple pixel-pulse">
             {identity.creator_code}
           </p>
-          <p className="text-[8px] text-wood-mid/50 normal-case">
+          <p className="text-[10px] text-wood-mid/50 normal-case">
             Save this! You need it to publish from other devices
           </p>
         </div>
@@ -555,7 +559,7 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
         {/* Identity */}
         {identity && (
           <p className="text-center text-[10px] text-parchment/50">
-            by <span className="text-accent-purple">{identity.display_name}</span>
+            by <span className="text-parchment/70">{identity.display_name}</span>
           </p>
         )}
 
@@ -603,7 +607,7 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
             type="text"
             readOnly
             value={publishResult.url}
-            className="flex-1 bg-transparent text-[8px] text-wood-dark outline-none normal-case"
+            className="flex-1 bg-transparent text-[10px] text-wood-dark outline-none normal-case"
             aria-label="Game URL"
           />
           <button

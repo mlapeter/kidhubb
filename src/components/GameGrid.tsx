@@ -9,7 +9,7 @@ export default function GameGrid({ games }: { games: Game[] }) {
         <h2 className="mt-4 text-xs text-wood-dark">
           No games yet!
         </h2>
-        <p className="mt-2 text-[8px] text-wood-mid/60 normal-case">
+        <p className="mt-2 text-[10px] text-wood-mid/60 normal-case">
           Be the first to publish a game and see it here
         </p>
       </div>
@@ -26,6 +26,8 @@ export default function GameGrid({ games }: { games: Game[] }) {
           creatorName={game.creator_name}
           playCount={game.play_count}
           likeCount={game.like_count}
+          emoji={game.emoji}
+          color={game.color}
         />
       ))}
     </div>
