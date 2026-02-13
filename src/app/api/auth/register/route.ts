@@ -3,8 +3,13 @@ import { supabase } from "@/lib/supabase";
 import { generateCreatorCode } from "@/lib/creator-codes";
 import { generateApiToken, hashToken } from "@/lib/auth";
 import { generateDisplayName } from "@/lib/display-names";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
 
 export async function POST(request: NextRequest) {
+  if (!rateLimit(getClientIp(request))) {
+    return NextResponse.json({ error: "Too many requests — slow down!" }, { status: 429 });
+  }
+
   try {
     const body = await request.json();
     const isAuto = body.auto === true;

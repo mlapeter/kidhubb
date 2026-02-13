@@ -3,6 +3,7 @@ import { supabase } from "@/lib/supabase";
 import { authenticateCreator } from "@/lib/auth";
 import { scanGameContent, MAX_HTML_SIZE, MAX_TITLE_LENGTH, MAX_DESCRIPTION_LENGTH } from "@/lib/safety";
 import { VALID_LIBRARY_KEYS } from "@/lib/libraries";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import crypto from "crypto";
 
 export async function GET(
@@ -37,6 +38,10 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  if (!rateLimit(getClientIp(request))) {
+    return NextResponse.json({ error: "Too many requests — slow down!" }, { status: 429 });
+  }
+
   const { id } = await params;
 
   try {
@@ -151,6 +156,10 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  if (!rateLimit(getClientIp(request))) {
+    return NextResponse.json({ error: "Too many requests — slow down!" }, { status: 429 });
+  }
+
   const { id } = await params;
 
   const creator = await authenticateCreator(

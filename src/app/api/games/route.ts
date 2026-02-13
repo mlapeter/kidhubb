@@ -4,6 +4,7 @@ import { authenticateCreator } from "@/lib/auth";
 import { generateSlug } from "@/lib/slug";
 import { scanGameContent, MAX_HTML_SIZE, MAX_TITLE_LENGTH, MAX_DESCRIPTION_LENGTH } from "@/lib/safety";
 import { VALID_LIBRARY_KEYS } from "@/lib/libraries";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import crypto from "crypto";
 
 export async function GET(request: NextRequest) {
@@ -57,6 +58,10 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  if (!rateLimit(getClientIp(request))) {
+    return NextResponse.json({ error: "Too many requests — slow down!" }, { status: 429 });
+  }
+
   try {
     const creator = await authenticateCreator(
       request.headers.get("authorization")

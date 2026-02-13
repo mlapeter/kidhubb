@@ -12,6 +12,7 @@ interface PublishResult {
 }
 
 interface SavedIdentity {
+  creator_id: string;
   creator_code: string;
   display_name: string;
 }
@@ -86,7 +87,7 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
         }
 
         const savedIdentity = getSavedIdentity();
-        if (!savedIdentity || savedIdentity.creator_code !== data.creator_code) {
+        if (!savedIdentity || savedIdentity.creator_id !== data.creator_id) {
           setError("You can only update your own games");
           setLoadingGame(false);
           return;
@@ -150,6 +151,7 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
       }
 
       const newIdentity: SavedIdentity = {
+        creator_id: data.id,
         creator_code: data.creator_code,
         display_name: data.display_name,
       };
@@ -197,6 +199,7 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
       }
 
       const recoveredIdentity: SavedIdentity = {
+        creator_id: data.id,
         creator_code: data.creator_code,
         display_name: data.display_name,
       };

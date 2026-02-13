@@ -20,7 +20,7 @@ export async function GET(
 
   const { data: creator } = await supabase
     .from("creators")
-    .select("display_name, creator_code")
+    .select("display_name")
     .eq("id", game.creator_id)
     .single();
 
@@ -30,7 +30,7 @@ export async function GET(
     title: game.title,
     description: game.description,
     libraries: game.libraries,
+    creator_id: game.creator_id,
     creator_name: creator?.display_name || "Unknown",
-    creator_code: creator?.creator_code || null,
   });
 }

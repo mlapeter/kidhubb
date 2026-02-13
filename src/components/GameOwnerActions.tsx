@@ -6,28 +6,27 @@ import { useRouter } from "next/navigation";
 interface GameOwnerActionsProps {
   slug: string;
   gameId: string;
-  creatorCode: string | null;
+  creatorId: string;
 }
 
-export default function GameOwnerActions({ slug, gameId, creatorCode }: GameOwnerActionsProps) {
+export default function GameOwnerActions({ slug, gameId, creatorId }: GameOwnerActionsProps) {
   const router = useRouter();
   const [isOwner, setIsOwner] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    if (!creatorCode) return;
     try {
       const saved = localStorage.getItem("kidhubb_identity");
       if (saved) {
         const identity = JSON.parse(saved);
-        if (identity.creator_code === creatorCode) {
+        if (identity.creator_id === creatorId) {
           setIsOwner(true);
         }
       }
     } catch {
       // ignore
     }
-  }, [creatorCode]);
+  }, [creatorId]);
 
   if (!isOwner) return null;
 

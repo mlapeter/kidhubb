@@ -22,14 +22,13 @@ async function getGame(slug: string) {
 
   const { data: creator } = await supabase
     .from("creators")
-    .select("display_name, creator_code")
+    .select("display_name")
     .eq("id", game.creator_id)
     .single();
 
   return {
     ...game,
     creator_name: creator?.display_name || "Unknown",
-    creator_code: creator?.creator_code || null,
   };
 }
 
@@ -70,7 +69,7 @@ export default async function PlayPage({ params }: Props) {
         <div className="rpg-panel inline-flex px-4 py-2 text-[10px] text-wood-mid/70">
           <span>▶ {game.play_count} plays</span>
         </div>
-        <GameOwnerActions slug={game.slug} gameId={game.id} creatorCode={game.creator_code} />
+        <GameOwnerActions slug={game.slug} gameId={game.id} creatorId={game.creator_id} />
       </div>
     </main>
   );
