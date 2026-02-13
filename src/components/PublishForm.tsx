@@ -447,6 +447,12 @@ export default function PublishForm() {
           </p>
         )}
 
+        {error && (
+          <div className="rpg-panel p-3">
+            <p className="text-[10px] text-accent-red">{error}</p>
+          </div>
+        )}
+
         {/* Publish button */}
         <button
           onClick={handlePublish}
@@ -462,12 +468,6 @@ export default function PublishForm() {
         >
           ← Start over
         </button>
-
-        {error && (
-          <div className="rpg-panel p-3">
-            <p className="text-[10px] text-accent-red">{error}</p>
-          </div>
-        )}
       </div>
     );
   }
