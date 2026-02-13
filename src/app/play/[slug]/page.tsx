@@ -3,6 +3,7 @@ import { supabase } from "@/lib/supabase";
 import GamePlayer from "@/components/GamePlayer";
 import CreatorBadge from "@/components/CreatorBadge";
 import LikeButton from "@/components/LikeButton";
+import GameOwnerActions from "@/components/GameOwnerActions";
 import type { Metadata } from "next";
 
 interface Props {
@@ -21,13 +22,14 @@ async function getGame(slug: string) {
 
   const { data: creator } = await supabase
     .from("creators")
-    .select("display_name")
+    .select("display_name, creator_code")
     .eq("id", game.creator_id)
     .single();
 
   return {
     ...game,
     creator_name: creator?.display_name || "Unknown",
+    creator_code: creator?.creator_code || null,
   };
 }
 
@@ -63,11 +65,12 @@ export default async function PlayPage({ params }: Props) {
       <GamePlayer slug={game.slug} title={game.title} />
 
       {/* Stats bar */}
-      <div className="mt-2 flex items-center gap-3">
+      <div className="mt-2 flex items-center gap-3 flex-wrap">
         <LikeButton gameId={game.id} initialCount={game.like_count} />
         <div className="rpg-panel inline-flex px-4 py-2 text-[10px] text-wood-mid/70">
           <span>▶ {game.play_count} plays</span>
         </div>
+        <GameOwnerActions slug={game.slug} gameId={game.id} creatorCode={game.creator_code} />
       </div>
     </main>
   );

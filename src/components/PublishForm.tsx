@@ -30,7 +30,7 @@ function saveIdentity(identity: SavedIdentity) {
   localStorage.setItem("kidhubb_identity", JSON.stringify(identity));
 }
 
-export default function PublishForm() {
+export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Identity
@@ -47,6 +47,14 @@ export default function PublishForm() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
+  // Update mode
+  const [existingGame, setExistingGame] = useState<{
+    id: string;
+    title: string;
+    description: string | null;
+  } | null>(null);
+  const [loadingGame, setLoadingGame] = useState(!!updateSlug);
+
   // UI
   const [phase, setPhase] = useState<Phase>("paste");
   const [error, setError] = useState("");
@@ -61,6 +69,44 @@ export default function PublishForm() {
     setIdentity(getSavedIdentity());
   }, []);
 
+  // Fetch existing game info in update mode
+  useEffect(() => {
+    if (!updateSlug) return;
+
+    async function fetchGame() {
+      setLoadingGame(true);
+      try {
+        const res = await fetch(`/api/games/by-slug/${updateSlug}`);
+        const data = await res.json();
+
+        if (!res.ok) {
+          setError("Couldn't find that game");
+          setLoadingGame(false);
+          return;
+        }
+
+        const savedIdentity = getSavedIdentity();
+        if (!savedIdentity || savedIdentity.creator_code !== data.creator_code) {
+          setError("You can only update your own games");
+          setLoadingGame(false);
+          return;
+        }
+
+        setExistingGame({
+          id: data.id,
+          title: data.title,
+          description: data.description,
+        });
+      } catch {
+        setError("Couldn't connect — try again");
+      } finally {
+        setLoadingGame(false);
+      }
+    }
+
+    fetchGame();
+  }, [updateSlug]);
+
 
   function handlePaste(code: string) {
     setRawCode(code);
@@ -71,12 +117,14 @@ export default function PublishForm() {
 
     const result = parseKidHubbHeader(code);
     setParsed(result);
-    setTitle(result.title || "");
-    setDescription(result.description || "");
+    setTitle(result.title || existingGame?.title || "");
+    setDescription(result.description || existingGame?.description || "");
     setError("");
 
     if (identity) {
       setPhase("confirm");
+    } else if (updateSlug) {
+      setError("You need to be logged in to update a game");
     } else {
       autoCreateAccount(result);
     }
@@ -206,6 +254,49 @@ export default function PublishForm() {
     }
   }
 
+  async function handleUpdate() {
+    if (!identity || !parsed || !existingGame) return;
+
+    const finalTitle = title.trim() || existingGame.title;
+    setError("");
+    setLoading(true);
+
+    try {
+      const res = await fetch(`/api/games/${existingGame.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          creator_code: identity.creator_code,
+          title: finalTitle,
+          description: description.trim() || undefined,
+          html: parsed.gameHtml,
+          libraries: parsed.libraries,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        const msg = data.warnings
+          ? `${data.error}: ${data.warnings.join(", ")}`
+          : data.error || "Failed to update";
+        setError(msg);
+        return;
+      }
+
+      setPublishResult({
+        url: data.url,
+        slug: data.slug,
+        title: data.title,
+      });
+      setPhase("success");
+    } catch {
+      setError("Couldn't connect — try again");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   function copyUrl() {
     if (publishResult) {
       navigator.clipboard.writeText(publishResult.url);
@@ -228,8 +319,26 @@ export default function PublishForm() {
   if (phase === "paste") {
     return (
       <div className="mx-auto max-w-2xl space-y-4">
-        {/* Identity banner for returning users */}
-        {identity && (
+        {/* Update mode: existing game info */}
+        {updateSlug && loadingGame && (
+          <div className="text-center py-4">
+            <span className="text-2xl pixel-blink">⏳</span>
+            <p className="mt-2 text-[10px] text-parchment/50">Loading game info...</p>
+          </div>
+        )}
+
+        {existingGame && (
+          <div className="rpg-panel p-3 text-center">
+            <p className="text-[10px] text-wood-mid/70">
+              Updating{" "}
+              <span className="text-accent-gold">{existingGame.title}</span>
+            </p>
+            <p className="text-[8px] text-wood-mid/50 mt-1">Paste your new game code below</p>
+          </div>
+        )}
+
+        {/* Identity banner for returning users (new game mode only) */}
+        {!updateSlug && identity && (
           <div className="rpg-panel p-3 text-center">
             <p className="text-[10px] text-wood-mid/70">
               Publishing as{" "}
@@ -453,13 +562,15 @@ export default function PublishForm() {
           </div>
         )}
 
-        {/* Publish button */}
+        {/* Publish/Update button */}
         <button
-          onClick={handlePublish}
+          onClick={updateSlug ? handleUpdate : handlePublish}
           disabled={loading || !identity}
           className="rpg-btn rpg-btn-green w-full px-6 py-5 text-xs disabled:opacity-50"
         >
-          {loading ? "Publishing..." : "🚀 Publish My Game!"}
+          {loading
+            ? (updateSlug ? "Updating..." : "Publishing...")
+            : (updateSlug ? "✏️ Update My Game!" : "🚀 Publish My Game!")}
         </button>
 
         <button
@@ -478,10 +589,10 @@ export default function PublishForm() {
       <div className="mx-auto max-w-lg space-y-6 text-center">
         <div className="text-5xl">🎉</div>
         <h2 className="text-sm sm:text-base text-accent-gold drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)]">
-          Nice! Your game is live!
+          {updateSlug ? "Game updated!" : "Nice! Your game is live!"}
         </h2>
         <p className="text-[10px] text-parchment/60">
-          Share this link with friends:
+          {updateSlug ? "Your changes are live now:" : "Share this link with friends:"}
         </p>
 
         <div className="rpg-panel p-3 flex items-center gap-2">
@@ -505,14 +616,16 @@ export default function PublishForm() {
             href={`/play/${publishResult.slug}`}
             className="rpg-btn rpg-btn-green flex-1 px-4 py-3 text-[10px] text-center"
           >
-            ▶ Play It
+            {updateSlug ? "← Back to Game" : "▶ Play It"}
           </a>
-          <button
-            onClick={reset}
-            className="rpg-btn flex-1 px-4 py-3 text-[10px] text-center"
-          >
-            🎮 Make Another
-          </button>
+          {!updateSlug && (
+            <button
+              onClick={reset}
+              className="rpg-btn flex-1 px-4 py-3 text-[10px] text-center"
+            >
+              🎮 Make Another
+            </button>
+          )}
         </div>
       </div>
     );
