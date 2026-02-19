@@ -9,6 +9,7 @@ export interface ParsedGame {
   libraries: string[];
   emoji?: string;
   color?: GameColor;
+  remix_of?: string;
   gameHtml: string;
 }
 
@@ -49,6 +50,8 @@ export function parseKidHubbHeader(code: string): ParsedGame {
         if (VALID_COLORS.includes(c as GameColor)) {
           result.color = c as GameColor;
         }
+      } else if (key === "remix_of") {
+        result.remix_of = value.trim();
       }
     }
   }

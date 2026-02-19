@@ -32,7 +32,7 @@ export default function GameBrowser({ initialGames }: { initialGames: Game[] }) 
   const tabs: { key: SortOption; label: string; icon: string }[] = [
     { key: "newest", label: "New", icon: "✨" },
     { key: "popular", label: "Popular", icon: "🔥" },
-    { key: "liked", label: "Liked", icon: "♥" },
+    { key: "liked", label: "Starred", icon: "⭐" },
   ];
 
   return (

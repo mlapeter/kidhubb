@@ -49,13 +49,13 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=sb_publishable_xxx
 SUPABASE_SERVICE_ROLE_KEY=sb_secret_xxx
 ```
 
-Apply database migrations and run:
+Apply the database migrations from `supabase/migrations/` to your Supabase project, then run:
 
 ```bash
-npx supabase link --project-ref YOUR_PROJECT_REF
-npx supabase db push
 npm run dev
 ```
+
+> **Note:** This project uses a remote Supabase instance directly (no local Supabase). Migration files in `supabase/migrations/` are version-controlled for reference. If you clone this repo, you'll need to set up your own Supabase project and apply the migrations.
 
 ### Deploy
 

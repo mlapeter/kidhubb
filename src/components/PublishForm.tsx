@@ -12,7 +12,7 @@ interface PublishResult {
   title: string;
 }
 
-export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
+export default function PublishForm({ updateSlug, remixOfSlug }: { updateSlug?: string; remixOfSlug?: string }) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Identity
@@ -36,6 +36,10 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
     description: string | null;
   } | null>(null);
   const [loadingGame, setLoadingGame] = useState(!!updateSlug);
+
+  // Remix
+  const [remixOf, setRemixOf] = useState(remixOfSlug || "");
+  const [remixInfo, setRemixInfo] = useState<{ title: string; creator_name: string } | null>(null);
 
   // UI
   const [phase, setPhase] = useState<Phase>("paste");
@@ -88,6 +92,26 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
 
     fetchGame();
   }, [updateSlug]);
+
+  // Fetch remix info
+  useEffect(() => {
+    if (!remixOfSlug) return;
+
+    async function fetchRemixInfo() {
+      try {
+        const res = await fetch(`/api/games/by-slug/${remixOfSlug}`);
+        if (res.ok) {
+          const data = await res.json();
+          setRemixInfo({ title: data.title, creator_name: data.creator_name });
+          setRemixOf(remixOfSlug || "");
+        }
+      } catch {
+        // silently fail
+      }
+    }
+
+    fetchRemixInfo();
+  }, [remixOfSlug]);
 
   function handlePaste(code: string) {
     setRawCode(code);
@@ -213,6 +237,7 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
           libraries: parsed.libraries,
           emoji: parsed.emoji || undefined,
           color: parsed.color || undefined,
+          remix_of: parsed.remix_of || remixOf || undefined,
         }),
       });
 
@@ -316,6 +341,15 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
               Updating <span className="text-accent-gold">{existingGame.title}</span>
             </p>
             <p className="text-[10px] text-wood-mid/50 mt-1">Paste your new game code below</p>
+          </div>
+        )}
+
+        {/* Remix banner */}
+        {remixInfo && (
+          <div className="rpg-panel p-3 text-center">
+            <p className="text-[10px] text-wood-mid/70">
+              🔀 Remixing <span className="text-accent-gold">{remixInfo.title}</span> by {remixInfo.creator_name}
+            </p>
           </div>
         )}
 

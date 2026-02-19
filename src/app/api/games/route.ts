@@ -102,6 +102,19 @@ export async function POST(request: NextRequest) {
     const emoji = body.emoji?.trim() || null;
     const color = VALID_COLORS.includes(body.color as GameColor) ? body.color : null;
 
+    // Resolve remix_of slug to forked_from UUID
+    const remixOfSlug = body.remix_of || null;
+    let forkedFrom: string | null = null;
+    if (remixOfSlug) {
+      const { data: original } = await supabase
+        .from("games")
+        .select("id")
+        .eq("slug", remixOfSlug)
+        .eq("status", "active")
+        .single();
+      if (original) forkedFrom = original.id;
+    }
+
     // Validate
     if (title.length > MAX_TITLE_LENGTH) {
       return NextResponse.json(
@@ -171,6 +184,7 @@ export async function POST(request: NextRequest) {
         libraries,
         emoji,
         color,
+        forked_from: forkedFrom,
       })
       .select("id, slug, title, description, created_at")
       .single();
