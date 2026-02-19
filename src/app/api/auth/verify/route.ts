@@ -31,11 +31,22 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       id: creator.id,
       creator_code: creator.creator_code,
       display_name: creator.display_name,
     });
+    response.cookies.set("kidhubb_identity", JSON.stringify({
+      creator_id: creator.id,
+      creator_code: creator.creator_code,
+      display_name: creator.display_name,
+    }), {
+      path: "/",
+      maxAge: 31536000,
+      sameSite: "lax",
+      httpOnly: false,
+    });
+    return response;
   } catch {
     return NextResponse.json(
       { error: "Invalid request" },
