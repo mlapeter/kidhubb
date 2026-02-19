@@ -10,7 +10,7 @@ interface RemixButtonProps {
 }
 
 export default function RemixButton({ gameId, gameTitle, gameSlug }: RemixButtonProps) {
-  const [state, setState] = useState<"idle" | "copying" | "modal">("idle");
+  const [state, setState] = useState<"idle" | "copying" | "modal" | "failed">("idle");
 
   async function handleRemix() {
     if (state !== "idle") return;
@@ -25,11 +25,13 @@ export default function RemixButton({ gameId, gameTitle, gameSlug }: RemixButton
 
       const { html } = await res.json();
 
-      const header = `<!--KIDHUBB\ntitle: Remix of ${gameTitle}\nremix_of: ${gameSlug}\n-->\n\n`;
+      // Sanitize title to prevent breaking out of the KIDHUBB comment block
+      const safeTitle = gameTitle.replace(/-->/g, "-- >");
+      const header = `<!--KIDHUBB\ntitle: Remix of ${safeTitle}\nremix_of: ${gameSlug}\n-->\n\n`;
       await navigator.clipboard.writeText(header + html);
       setState("modal");
     } catch {
-      setState("idle");
+      setState("failed");
     }
   }
 
@@ -47,9 +49,32 @@ export default function RemixButton({ gameId, gameTitle, gameSlug }: RemixButton
         {state === "copying" ? "⏳" : "🔀"} Remix
       </button>
 
+      {state === "failed" && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70" onClick={closeModal}>
+          <div className="rpg-panel p-8 max-w-md mx-4 text-center space-y-4" role="dialog" aria-label="Remix failed" onClick={(e) => e.stopPropagation()}>
+            <div className="text-4xl">😅</div>
+            <h2 className="text-sm text-accent-gold drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)]">
+              Couldn&apos;t copy automatically
+            </h2>
+            <p className="text-[10px] text-wood-mid/70 normal-case">
+              Your browser blocked clipboard access. Visit the source page to copy the code manually!
+            </p>
+            <Link
+              href={`/play/${gameSlug}/source`}
+              className="rpg-btn rpg-btn-purple block w-full px-4 py-3 text-[10px] text-center"
+            >
+              &lt;/&gt; View Source
+            </Link>
+            <button onClick={closeModal} className="text-[10px] text-wood-mid/50 hover:text-wood-dark" aria-label="Close">
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
       {state === "modal" && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70" onClick={closeModal}>
-          <div className="rpg-panel p-8 max-w-md mx-4 text-center space-y-4" onClick={(e) => e.stopPropagation()}>
+          <div className="rpg-panel p-8 max-w-md mx-4 text-center space-y-4" role="dialog" aria-label="Remix confirmation" onClick={(e) => e.stopPropagation()}>
             <div className="text-4xl">📋</div>
             <h2 className="text-sm text-accent-gold drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)]">
               Code Copied!
@@ -63,10 +88,7 @@ export default function RemixButton({ gameId, gameTitle, gameSlug }: RemixButton
             >
               🚀 Publish Your Remix
             </Link>
-            <button
-              onClick={closeModal}
-              className="text-[10px] text-wood-mid/50 hover:text-wood-dark"
-            >
+            <button onClick={closeModal} className="text-[10px] text-wood-mid/50 hover:text-wood-dark" aria-label="Close">
               Close
             </button>
           </div>

@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
@@ -9,7 +10,7 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-async function getGameWithSource(slug: string) {
+const getGameWithSource = cache(async function getGameWithSource(slug: string) {
   const { data: game } = await supabase
     .from("games")
     .select("id, slug, title, creator_id, libraries, status")
@@ -19,24 +20,17 @@ async function getGameWithSource(slug: string) {
 
   if (!game) return null;
 
-  const { data: content } = await supabase
-    .from("game_content")
-    .select("html")
-    .eq("game_id", game.id)
-    .single();
-
-  const { data: creator } = await supabase
-    .from("creators")
-    .select("display_name")
-    .eq("id", game.creator_id)
-    .single();
+  const [{ data: content }, { data: creator }] = await Promise.all([
+    supabase.from("game_content").select("html").eq("game_id", game.id).single(),
+    supabase.from("creators").select("display_name").eq("id", game.creator_id).single(),
+  ]);
 
   return {
     ...game,
     html: content?.html || "",
     creator_name: creator?.display_name || "Unknown",
   };
-}
+});
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
@@ -105,8 +99,7 @@ export default async function SourcePage({ params }: Props) {
         <p>Creator: {game.creator_name}</p>
         <p>Libraries: {game.libraries?.length ? game.libraries.join(", ") : "none"}</p>
         <p>Complexity: {complexityEstimate} ({lineCount} lines, {fileSizeLabel})</p>
-        <h3>Full Source Code</h3>
-        <pre>{game.html}</pre>
+        <p>The full source code is displayed above on this page.</p>
         <h3>Remix Instructions</h3>
         <p>
           To remix this game, copy the source code above and modify it. Add a KIDHUBB header at the top

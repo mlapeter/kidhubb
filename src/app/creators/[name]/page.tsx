@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { notFound } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import GameCard from "@/components/GameCard";
@@ -7,13 +8,15 @@ interface Props {
   params: Promise<{ name: string }>;
 }
 
-async function getCreatorAndGames(name: string) {
+const getCreatorAndGames = cache(async function getCreatorAndGames(name: string) {
   const decodedName = decodeURIComponent(name);
 
+  // Escape ilike wildcards so % and _ in names are treated as literals
+  const escapedName = decodedName.replace(/%/g, "\\%").replace(/_/g, "\\_");
   const { data: creator } = await supabase
     .from("creators")
     .select("id, display_name")
-    .ilike("display_name", decodedName)
+    .ilike("display_name", escapedName)
     .single();
 
   if (!creator) return null;
@@ -29,7 +32,7 @@ async function getCreatorAndGames(name: string) {
     creator,
     games: games || [],
   };
-}
+});
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { name } = await params;

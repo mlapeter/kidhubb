@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import Link from "next/link";
@@ -14,7 +15,7 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-async function getGame(slug: string) {
+const getGame = cache(async function getGame(slug: string) {
   const { data: game } = await supabase
     .from("games")
     .select("id, slug, title, description, creator_id, play_count, like_count, forked_from, libraries, status, created_at")
@@ -34,7 +35,7 @@ async function getGame(slug: string) {
     ...game,
     creator_name: creator?.display_name || "Unknown",
   };
-}
+});
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
@@ -67,36 +68,35 @@ export default async function PlayPage({ params }: Props) {
     // cookie missing or malformed
   }
 
-  // Fetch remix provenance if forked_from is set
-  let remixSource: { slug: string; title: string; creator_name: string } | null = null;
-  if (game.forked_from) {
-    const { data: original } = await supabase
-      .from("games")
-      .select("slug, title, creator_id")
-      .eq("id", game.forked_from)
-      .single();
-
-    if (original) {
+  // Fetch remix provenance and remix count in parallel
+  const [remixSource, { count: remixCount }] = await Promise.all([
+    // Remix provenance (if this game is a remix)
+    (async () => {
+      if (!game.forked_from) return null;
+      const { data: original } = await supabase
+        .from("games")
+        .select("slug, title, creator_id")
+        .eq("id", game.forked_from)
+        .single();
+      if (!original) return null;
       const { data: origCreator } = await supabase
         .from("creators")
         .select("display_name")
         .eq("id", original.creator_id)
         .single();
-
-      remixSource = {
+      return {
         slug: original.slug,
         title: original.title,
         creator_name: origCreator?.display_name || "Unknown",
       };
-    }
-  }
-
-  // Count remixes of this game
-  const { count: remixCount } = await supabase
-    .from("games")
-    .select("id", { count: "exact", head: true })
-    .eq("forked_from", game.id)
-    .eq("status", "active");
+    })(),
+    // Remix count (how many games are remixes of this one)
+    supabase
+      .from("games")
+      .select("id", { count: "exact", head: true })
+      .eq("forked_from", game.id)
+      .eq("status", "active"),
+  ]);
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-4">

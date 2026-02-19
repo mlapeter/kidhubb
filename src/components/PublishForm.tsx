@@ -103,7 +103,6 @@ export default function PublishForm({ updateSlug, remixOfSlug }: { updateSlug?: 
         if (res.ok) {
           const data = await res.json();
           setRemixInfo({ title: data.title, creator_name: data.creator_name });
-          setRemixOf(remixOfSlug || "");
         }
       } catch {
         // silently fail

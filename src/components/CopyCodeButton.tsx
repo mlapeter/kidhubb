@@ -3,12 +3,17 @@
 import { useState } from "react";
 
 export default function CopyCodeButton({ code }: { code: string }) {
-  const [copied, setCopied] = useState(false);
+  const [status, setStatus] = useState<"idle" | "copied" | "failed">("idle");
 
   async function handleCopy() {
-    await navigator.clipboard.writeText(code);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      await navigator.clipboard.writeText(code);
+      setStatus("copied");
+      setTimeout(() => setStatus("idle"), 2000);
+    } catch {
+      setStatus("failed");
+      setTimeout(() => setStatus("idle"), 3000);
+    }
   }
 
   return (
@@ -16,7 +21,7 @@ export default function CopyCodeButton({ code }: { code: string }) {
       onClick={handleCopy}
       className="rpg-btn rpg-btn-purple px-4 py-2 text-[10px]"
     >
-      {copied ? "✓ Copied!" : "📋 Copy Code"}
+      {status === "copied" ? "✓ Copied!" : status === "failed" ? "Copy failed — try selecting manually" : "📋 Copy Code"}
     </button>
   );
 }
