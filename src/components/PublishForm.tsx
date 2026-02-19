@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { parseKidHubbHeader, type ParsedGame } from "@/lib/parse-game";
+import { getCreatorIdentity, saveCreatorIdentity, type CreatorIdentity } from "@/lib/identity";
 
 type Phase = "paste" | "welcome" | "confirm" | "success";
 
@@ -11,31 +12,11 @@ interface PublishResult {
   title: string;
 }
 
-interface SavedIdentity {
-  creator_id: string;
-  creator_code: string;
-  display_name: string;
-}
-
-function getSavedIdentity(): SavedIdentity | null {
-  try {
-    const saved = localStorage.getItem("kidhubb_identity");
-    if (saved) return JSON.parse(saved);
-  } catch {
-    // ignore
-  }
-  return null;
-}
-
-function saveIdentity(identity: SavedIdentity) {
-  localStorage.setItem("kidhubb_identity", JSON.stringify(identity));
-}
-
 export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Identity
-  const [identity, setIdentity] = useState<SavedIdentity | null>(null);
+  const [identity, setIdentity] = useState<CreatorIdentity | null>(null);
   const [showRecovery, setShowRecovery] = useState(false);
   const [recoveryCode, setRecoveryCode] = useState("");
   const [recoveryError, setRecoveryError] = useState("");
@@ -67,7 +48,7 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
 
   // Load saved identity on mount
   useEffect(() => {
-    setIdentity(getSavedIdentity());
+    setIdentity(getCreatorIdentity());
   }, []);
 
   // Fetch existing game info in update mode
@@ -86,7 +67,7 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
           return;
         }
 
-        const savedIdentity = getSavedIdentity();
+        const savedIdentity = getCreatorIdentity();
         if (!savedIdentity || savedIdentity.creator_id !== data.creator_id) {
           setError("You can only update your own games");
           setLoadingGame(false);
@@ -149,12 +130,12 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
         return;
       }
 
-      const newIdentity: SavedIdentity = {
+      const newIdentity: CreatorIdentity = {
         creator_id: data.id,
         creator_code: data.creator_code,
         display_name: data.display_name,
       };
-      saveIdentity(newIdentity);
+      saveCreatorIdentity(newIdentity);
       setIdentity(newIdentity);
       setParsed(parsedGame);
       setPhase("welcome");
@@ -197,12 +178,12 @@ export default function PublishForm({ updateSlug }: { updateSlug?: string }) {
         return;
       }
 
-      const recoveredIdentity: SavedIdentity = {
+      const recoveredIdentity: CreatorIdentity = {
         creator_id: data.id,
         creator_code: data.creator_code,
         display_name: data.display_name,
       };
-      saveIdentity(recoveredIdentity);
+      saveCreatorIdentity(recoveredIdentity);
       setIdentity(recoveredIdentity);
       setShowRecovery(false);
       setRecoveryCode("");

@@ -2,31 +2,27 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { getCreatorIdentity } from "@/lib/identity";
 
 interface GameOwnerActionsProps {
   slug: string;
   gameId: string;
   creatorId: string;
+  serverIsOwner?: boolean;
 }
 
-export default function GameOwnerActions({ slug, gameId, creatorId }: GameOwnerActionsProps) {
+export default function GameOwnerActions({ slug, gameId, creatorId, serverIsOwner }: GameOwnerActionsProps) {
   const router = useRouter();
-  const [isOwner, setIsOwner] = useState(false);
+  const [isOwner, setIsOwner] = useState(serverIsOwner ?? false);
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem("kidhubb_identity");
-      if (saved) {
-        const identity = JSON.parse(saved);
-        if (identity.creator_id === creatorId) {
-          setIsOwner(true);
-        }
-      }
-    } catch {
-      // ignore
+    if (isOwner) return; // already confirmed by server
+    const identity = getCreatorIdentity();
+    if (identity?.creator_id === creatorId) {
+      setIsOwner(true);
     }
-  }, [creatorId]);
+  }, [creatorId, isOwner]);
 
   if (!isOwner) return null;
 
@@ -37,9 +33,8 @@ export default function GameOwnerActions({ slug, gameId, creatorId }: GameOwnerA
 
     setDeleting(true);
     try {
-      const saved = localStorage.getItem("kidhubb_identity");
-      if (!saved) return;
-      const identity = JSON.parse(saved);
+      const identity = getCreatorIdentity();
+      if (!identity) return;
 
       const res = await fetch(`/api/games/${gameId}`, {
         method: "DELETE",

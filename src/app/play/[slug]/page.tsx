@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 import { supabase } from "@/lib/supabase";
 import GamePlayer from "@/components/GamePlayer";
 import CreatorBadge from "@/components/CreatorBadge";
@@ -50,6 +51,18 @@ export default async function PlayPage({ params }: Props) {
 
   if (!game) notFound();
 
+  let serverIsOwner = false;
+  try {
+    const cookieStore = await cookies();
+    const raw = cookieStore.get("kidhubb_identity")?.value;
+    if (raw) {
+      const parsed = JSON.parse(decodeURIComponent(raw));
+      serverIsOwner = parsed.creator_id === game.creator_id;
+    }
+  } catch {
+    // cookie missing or malformed
+  }
+
   return (
     <main className="mx-auto max-w-5xl px-4 py-4">
       {/* Game header — title + creator on one line */}
@@ -69,7 +82,7 @@ export default async function PlayPage({ params }: Props) {
         <div className="rpg-panel inline-flex px-4 py-2 text-[10px] text-wood-mid/70">
           <span>▶ {game.play_count} plays</span>
         </div>
-        <GameOwnerActions slug={game.slug} gameId={game.id} creatorId={game.creator_id} />
+        <GameOwnerActions slug={game.slug} gameId={game.id} creatorId={game.creator_id} serverIsOwner={serverIsOwner} />
       </div>
     </main>
   );
