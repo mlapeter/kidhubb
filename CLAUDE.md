@@ -23,9 +23,12 @@ KidHubb is an experiment in how humans, AI, and websites interact. It's one of t
 - `npm run dev` — local dev server
 - `npm run build` — production build
 - `npm run lint` — ESLint
-- `supabase db diff --local -f <migration_name>` — create a new migration after schema changes
-- `supabase migration up --local` — apply pending migrations locally
-- `supabase db reset` — reset local database and replay all migrations
+
+## Database / Supabase
+
+There is no local Supabase instance. The `.env.local` points directly at the production Supabase project. Migration SQL files live in `supabase/migrations/` for version control, but the owner applies them manually to production — never run `supabase db push`, `supabase db reset`, or `supabase migration up` yourself.
+
+**This Supabase project is shared with other important projects.** Never run any destructive Supabase commands (DROP TABLE, DELETE FROM without WHERE, TRUNCATE, db reset, etc.). There should be no reason to do so for KidHubb work. If a migration needs to be written, create the SQL file and stop — the owner will review and apply it.
 
 ## Architecture
 

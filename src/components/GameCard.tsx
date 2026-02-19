@@ -82,7 +82,7 @@ export default function GameCard({
             by {creatorName}
           </p>
           <div className="mt-2 flex items-center gap-3 text-[10px] text-wood-mid/50">
-            <span>♥ {likeCount}</span>
+            <span>⭐ {likeCount}</span>
             <span>▶ {playCount}</span>
           </div>
         </div>

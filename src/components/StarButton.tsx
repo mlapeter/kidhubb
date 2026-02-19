@@ -2,18 +2,18 @@
 
 import { useState } from "react";
 
-interface LikeButtonProps {
+interface StarButtonProps {
   gameId: string;
   initialCount: number;
 }
 
-export default function LikeButton({ gameId, initialCount }: LikeButtonProps) {
+export default function StarButton({ gameId, initialCount }: StarButtonProps) {
   const [count, setCount] = useState(initialCount);
-  const [liked, setLiked] = useState(false);
+  const [starred, setStarred] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  async function handleLike() {
-    if (liked || loading) return;
+  async function handleStar() {
+    if (starred || loading) return;
 
     setLoading(true);
     try {
@@ -21,10 +21,9 @@ export default function LikeButton({ gameId, initialCount }: LikeButtonProps) {
 
       if (res.status === 201) {
         setCount((c) => c + 1);
-        setLiked(true);
+        setStarred(true);
       } else if (res.status === 409) {
-        // Already liked
-        setLiked(true);
+        setStarred(true);
       }
     } catch {
       // silently fail
@@ -35,16 +34,16 @@ export default function LikeButton({ gameId, initialCount }: LikeButtonProps) {
 
   return (
     <button
-      onClick={handleLike}
-      disabled={liked || loading}
+      onClick={handleStar}
+      disabled={starred || loading}
       className={`rpg-panel inline-flex items-center gap-2 px-4 py-2 text-[10px] transition-colors ${
-        liked
-          ? "text-accent-red cursor-default"
-          : "text-wood-mid/70 hover:text-accent-red cursor-pointer"
+        starred
+          ? "text-accent-gold cursor-default"
+          : "text-wood-mid/70 hover:text-accent-gold cursor-pointer"
       }`}
     >
-      <span className={liked ? "pixel-pulse" : ""}>{liked ? "♥" : "♡"}</span>
-      <span>{count} {count === 1 ? "like" : "likes"}</span>
+      <span className={starred ? "pixel-pulse" : ""}>{starred ? "⭐" : "☆"}</span>
+      <span>{count} {count === 1 ? "star" : "stars"}</span>
     </button>
   );
 }

@@ -11,3 +11,10 @@
 - **Play page queries Supabase directly** — Removed self-fetch pattern (`fetch(baseUrl/api/games)`) that required constructing `VERCEL_URL`. Direct DB query is simpler and faster.
 - **Safety scanner is heuristic only** — Regex patterns catch obvious bad intent but aren't a security boundary. Real security = iframe sandbox + CSP + subdomain isolation.
 - **Removed localStorage/sessionStorage from blocked patterns** — AI-generated games commonly use these for scores/state. Sandbox already prevents cross-origin abuse. Was silently blocking publishes (error hidden below fold on iPad).
+
+## 2026-02-19
+
+- **Cookie-based identity fallback** (PR #5) — localStorage is ephemeral in iOS in-app browsers (WKWebView, e.g. Claude app). Added `kidhubb_identity` cookie as a second persistence layer. Server reads cookie to pass `serverIsOwner` to GameOwnerActions so edit/delete buttons render on first paint without waiting for client JS hydration.
+- **Centralized identity module** — `src/lib/identity.ts` replaces inline localStorage code that was duplicated in PublishForm and GameOwnerActions. `getCreatorIdentity()` tries localStorage first, falls back to cookie. `saveCreatorIdentity()` writes both.
+- **Cookie is NOT httpOnly** — client JS needs to read it. Not a security concern per project philosophy (no sensitive data, creator codes are casual identifiers).
+- **Auth endpoints set cookie server-side** — Both `/api/auth/register` and `/api/auth/verify` set the cookie on the response, so it's present even if the client-side `saveCreatorIdentity()` write fails.

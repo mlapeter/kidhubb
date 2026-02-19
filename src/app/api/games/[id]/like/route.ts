@@ -1,11 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
 
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
+
+  if (!rateLimit(getClientIp(request), { maxRequests: 10, windowMs: 60_000 })) {
+    return NextResponse.json({ error: "Too many requests — slow down!" }, { status: 429 });
+  }
 
   // Get or create a session ID from cookies
   const sessionId =
