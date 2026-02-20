@@ -2,11 +2,11 @@
 
 **The shortest path from "I made a game" to "my friends can play it."**
 
-KidHubb is a platform where kids publish and play browser-based games. A kid makes a game with an AI assistant, copies the code, pastes it into kidhubb.com, and it's live. That's it.
+KidHubb is a platform where kids publish and play browser-based games. A kid makes a game with an AI assistant, copies the code, pastes it into www.kidhubb.com, and it's live. That's it.
 
 ## Why This Exists
 
-A 7-year-old who's barely learned to read is using Claude on his iPad to create real, playable browser games — meteor shooters, drawing apps, physics toys. The missing piece was sharing. Every existing platform requires accounts, emails, app installs, build tools, or developer knowledge. KidHubb removes all of that. One paste, one click, your game is live.
+My 7-year-old who's barely learned to read is using Claude on his iPad to create real, playable browser games — meteor shooters, zombie games, you name it. He uses voice to describe what he wants, and can read enough to make text edits when it gets a word wrong. The missing piece was sharing. Every existing platform requires accounts, emails, app installs, build tools, or developer knowledge. KidHubb removes all of that. One paste, one click, your game is live.
 
 ## What Makes This Different
 
@@ -14,7 +14,7 @@ A 7-year-old who's barely learned to read is using Claude on his iPad to create 
 
 **Every game is a single HTML file.** No build tools, no bundlers, no frameworks required. Just a self-contained document — the way the web was meant to work. Games are viewable, inspectable, and remixable. Popular libraries (Phaser, p5.js, Three.js, etc.) are injected automatically via CDN.
 
-**Identity without accounts.** No email, no passwords, no OAuth. Kids get a memorable creator code (like `ROCKET-WOLF-COMET-73`) that links to their creator name. It's stored in the browser and can be recovered on a new device. Low stakes by design — the worst case is making a new code.
+**Identity without accounts.** No email, no passwords, no OAuth. Kids get a memorable creator code (like `ROCKET-WOLF-COMET-73`) that links to their creator name. It's stored in the browser and also in his claude's memory. Low stakes by design — the worst case is making a new code.
 
 **Security through sandboxing, not friction.** Games run in sandboxed iframes on a separate origin with `connect-src: 'none'` — they literally cannot make network requests. A lightweight content scanner catches obvious bad patterns. That's the security model. No CAPTCHA, no email verification, no gates between a kid and their creation.
 
