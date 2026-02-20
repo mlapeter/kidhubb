@@ -28,7 +28,7 @@ KidHubb is an experiment in how humans, AI, and websites interact. It's one of t
 
 There is no local Supabase instance. The `.env.local` points directly at the production Supabase project. Migration SQL files live in `supabase/migrations/` for version control, but the owner applies them manually to production — never run `supabase db push`, `supabase db reset`, or `supabase migration up` yourself.
 
-**This Supabase project is shared with other important projects.** Never run any destructive Supabase commands (DROP TABLE, DELETE FROM without WHERE, TRUNCATE, db reset, etc.). There should be no reason to do so for KidHubb work. If a migration needs to be written, create the SQL file and stop — the owner will review and apply it.
+**Supabase may also be used by the user in other important projects.** Never run any destructive Supabase commands (DROP TABLE, DELETE FROM without WHERE, TRUNCATE, db reset, etc.). There should be no reason to do so for KidHubb work. If a migration needs to be written, create the SQL file and stop — the owner will review and apply it.
 
 ## Architecture
 
