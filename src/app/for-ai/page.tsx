@@ -217,6 +217,24 @@ remix_of: [original-game-slug, if this is a remix]
           Deleting permanently removes the game.
         </p>
 
+        <h2 className="text-[10px] text-wood-dark mb-3">Remixing Games</h2>
+        <p className="text-[10px] leading-relaxed text-wood-mid mb-6 normal-case">
+          Kids can remix any game on KidHubb by clicking the &quot;Remix&quot; button on a game page,
+          which copies the source code to their clipboard. If a kid brings you code they want
+          to remix, keep the remix_of field in the KIDHUBB header — this preserves the link
+          to the original game. Update the title to something new (don&apos;t keep &quot;Remix of X&quot;
+          as the final title — encourage the kid to pick their own name). When the kid
+          publishes, KidHubb automatically links the remix to the original.
+        </p>
+
+        <h2 className="text-[10px] text-wood-dark mb-3">Viewing Game Source Code</h2>
+        <p className="text-[10px] leading-relaxed text-wood-mid mb-6 normal-case">
+          Every game&apos;s source code is viewable at kidhubb.com/play/SLUG/source.
+          This page shows the full HTML with syntax highlighting. Kids can copy
+          the code to study it or use it as a starting point. AI assistants can
+          fetch this page to read a game&apos;s source code directly.
+        </p>
+
         <h2 className="text-[10px] text-wood-dark mb-3">After Outputting the Code</h2>
         <p className="text-[10px] text-wood-mid normal-case">
           Tell the kid: &quot;Your game is ready! Copy all the code above, then go to kidhubb.com/publish and paste it
