@@ -66,7 +66,7 @@
 
 /* ── Base styles ── */
 @layer base {
-  body {
+  html {
     background: linear-gradient(
       180deg,
       var(--sky-top) 0%,
@@ -77,42 +77,16 @@
       var(--ground-mid) 92%,
       var(--ground-dark) 100%
     );
-    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  body {
+    background: transparent;
     color: var(--foreground);
     font-family: var(--font-pixel);
     text-transform: uppercase;
     image-rendering: pixelated;
     min-height: 100vh;
-  }
-
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    background-image:
-      radial-gradient(1px 1px at 10% 8%, #ffffff 100%, transparent),
-      radial-gradient(1px 1px at 25% 3%, #ffffcc 100%, transparent),
-      radial-gradient(2px 2px at 40% 12%, #ffffff 100%, transparent),
-      radial-gradient(1px 1px at 55% 5%, #ffffcc 100%, transparent),
-      radial-gradient(1px 1px at 70% 15%, #ffffff 100%, transparent),
-      radial-gradient(2px 2px at 85% 7%, #ffffcc 100%, transparent),
-      radial-gradient(1px 1px at 15% 20%, #ffffff 100%, transparent),
-      radial-gradient(1px 1px at 33% 18%, #ffffcc 100%, transparent),
-      radial-gradient(2px 2px at 60% 22%, #ffffff 100%, transparent),
-      radial-gradient(1px 1px at 78% 25%, #ffffcc 100%, transparent),
-      radial-gradient(1px 1px at 92% 10%, #ffffff 100%, transparent),
-      radial-gradient(1px 1px at 5% 28%, #ffffff 100%, transparent),
-      radial-gradient(2px 2px at 48% 2%, #ffffcc 100%, transparent),
-      radial-gradient(1px 1px at 20% 30%, #ffffff 100%, transparent),
-      radial-gradient(1px 1px at 65% 28%, #ffffcc 100%, transparent),
-      radial-gradient(1px 1px at 88% 18%, #ffffff 100%, transparent),
-      radial-gradient(1px 1px at 42% 26%, #ffffff 100%, transparent),
-      radial-gradient(2px 2px at 8% 14%, #ffffcc 100%, transparent),
-      radial-gradient(1px 1px at 73% 6%, #ffffff 100%, transparent),
-      radial-gradient(1px 1px at 95% 22%, #ffffcc 100%, transparent);
-    animation: twinkle 4s ease-in-out infinite alternate;
   }
 
   input[type="text"],
@@ -258,11 +232,6 @@
 }
 
 /* ── Keyframes (outside layers) ── */
-@keyframes twinkle {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
-}
-
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
