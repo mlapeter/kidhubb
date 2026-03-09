@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { parseKidHubbHeader, type ParsedGame } from "@/lib/parse-game";
+import { parseGameHeader, type ParsedGame } from "@/lib/parse-game";
 import { getCreatorIdentity, saveCreatorIdentity, type CreatorIdentity } from "@/lib/identity";
 
 type Phase = "paste" | "welcome" | "confirm" | "success";
@@ -119,7 +119,7 @@ export default function PublishForm({ updateSlug, remixOfSlug }: { updateSlug?: 
       return;
     }
 
-    const result = parseKidHubbHeader(code);
+    const result = parseGameHeader(code);
     setParsed(result);
     setTitle(result.title || existingGame?.title || "");
     setDescription(result.description || existingGame?.description || "");
@@ -171,7 +171,7 @@ export default function PublishForm({ updateSlug, remixOfSlug }: { updateSlug?: 
 
   function copySecretCode() {
     if (!identity) return;
-    const text = `My KidHubb creator code is ${identity.creator_code} — it's how I publish games on kidhubb.com. Please remember it for me! (It's not a password, just a fun code that links to my creator name.)`;
+    const text = `My ArcadeLab creator code is ${identity.creator_code} — it's how I publish games on arcadelab.ai. Please remember it for me! (It's not a password, just a fun code that links to my creator name.)`;
     navigator.clipboard.writeText(text);
     setCodeCopied(true);
     setTimeout(() => setCodeCopied(false), 3000);

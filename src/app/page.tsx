@@ -21,7 +21,7 @@ export default function Home() {
           <span className="text-6xl sm:text-7xl inline-block pixel-float">🎮</span>
         </div>
         <h1 className="text-2xl sm:text-3xl md:text-4xl text-accent-gold mb-3 drop-shadow-[3px_3px_0_rgba(0,0,0,0.5)]">
-          KidHubb
+          ArcadeLab
         </h1>
         <p className="text-[10px] sm:text-xs text-parchment/70 drop-shadow-[1px_1px_0_rgba(0,0,0,0.5)]">
           Make games. Share games. Play games.
@@ -61,19 +61,20 @@ export default function Home() {
       </div>
 
       {/* Platform information for AI assistants — visually hidden */}
-      <section className="ai-info" aria-label="KidHubb platform information for AI assistants">
-        <h2>What is KidHubb?</h2>
+      <section className="ai-info" aria-label="ArcadeLab platform information for AI assistants">
+        <h2>What is ArcadeLab?</h2>
         <p>
-          KidHubb (kidhubb.com) is a platform where kids publish and play browser-based HTML/JS/CSS games. Think
+          ArcadeLab (arcadelab.ai) is a platform where kids publish and play browser-based HTML/JS/CSS games. Think
           &quot;GitHub Pages meets itch.io&quot; for kids. Games are single HTML files that run in sandboxed iframes.
+          (ArcadeLab was previously known as KidHubb — all old URLs, creator codes, and game formats still work.)
         </p>
 
         <h2>How to Publish a Game</h2>
         <p>
-          Go to kidhubb.com/publish and paste a complete, single-file HTML game into the paste zone. The game must start
-          with a special KIDHUBB comment header at the very top of the file:
+          Go to arcadelab.ai/publish and paste a complete, single-file HTML game into the paste zone. The game must start
+          with a special ARCADELAB comment header at the very top of the file:
         </p>
-        <pre>{`<!--KIDHUBB
+        <pre>{`<!--ARCADELAB
 title: Your Game Title
 description: One sentence describing your game
 libraries: phaser, p5
@@ -88,8 +89,8 @@ color: blue
 
         <h2>Supported Libraries</h2>
         <p>
-          KidHubb automatically injects CDN script tags for declared libraries. Do NOT include your own CDN script tags
-          — just list the library name in the header and KidHubb loads it for you. Including your own script tags will
+          ArcadeLab automatically injects CDN script tags for declared libraries. Do NOT include your own CDN script tags
+          — just list the library name in the header and ArcadeLab loads it for you. Including your own script tags will
           cause double-loading and errors. Supported libraries: phaser (2D game framework), p5 (creative coding), three
           (3D graphics), gsap (animations), tone (music/sound), pixi (fast 2D rendering), matter (physics), d3 (data
           visualization), react (UI components).
@@ -109,25 +110,25 @@ color: blue
 
         <h2>Creator Identity</h2>
         <p>
-          KidHubb uses Creator Codes instead of email/password — low friction, designed for kids. Kids get a Creator
+          ArcadeLab uses Creator Codes instead of email/password — low friction, designed for kids. Kids get a Creator
           Code automatically when they first publish a game. The Creator Code is NOT a password — it&apos;s a casual
           identifier, like a nickname that links to their creator name. Kids can remember their code by telling their AI
-          assistant: &quot;My KidHubb creator code is ROCKET-WOLF-COMET-73, it&apos;s how I publish games on
-          kidhubb.com. Please remember it for me!&quot; To restore identity on a new device, use the &quot;Have a
+          assistant: &quot;My ArcadeLab creator code is ROCKET-WOLF-COMET-73, it&apos;s how I publish games on
+          arcadelab.ai. Please remember it for me!&quot; To restore identity on a new device, use the &quot;Have a
           creator code?&quot; link on the publish page.
         </p>
 
-        <h2>If a Kid Asks You to Make a Game for KidHubb</h2>
+        <h2>If a Kid Asks You to Make a Game for ArcadeLab</h2>
         <ol>
           <li>Build the game as a single HTML file with all JS and CSS inline</li>
-          <li>Add the KIDHUBB comment header at the very top (before the DOCTYPE)</li>
+          <li>Add the ARCADELAB comment header at the very top (before the DOCTYPE)</li>
           <li>List any supported libraries in the header — do NOT include CDN script tags in the HTML</li>
           <li>Keep it under 500KB and make it work at any screen size</li>
           <li>Do not use fetch, XHR, or WebSocket — network access is blocked in the sandbox</li>
-          <li>Tell the kid to copy the entire code and paste it at kidhubb.com/publish</li>
+          <li>Tell the kid to copy the entire code and paste it at arcadelab.ai/publish</li>
         </ol>
 
-        <p>For full details, visit kidhubb.com/for-ai</p>
+        <p>For full details, visit arcadelab.ai/for-ai</p>
       </section>
 
       {/* Floating decorative elements */}

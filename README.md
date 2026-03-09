@@ -1,16 +1,18 @@
-# 🎮 KidHubb
+# 🎮 ArcadeLab
 
 **The shortest path from "I made a game" to "my friends can play it."**
 
-KidHubb is a platform where kids publish and play browser-based games. A kid makes a game with an AI assistant, copies the code, pastes it into www.kidhubb.com, and it's live. That's it.
+ArcadeLab is a platform where kids publish and play browser-based games. A kid makes a game with an AI assistant, copies the code, pastes it into arcadelab.ai, and it's live. That's it.
+
+> Previously known as KidHubb (kidhubb.com). All old URLs redirect to arcadelab.ai.
 
 ## Why This Exists
 
-My 7-year-old who's barely learned to read is using Claude on his iPad to create real, playable browser games — meteor shooters, zombie games, you name it. He uses voice to describe what he wants, and can read enough to make text edits when it gets a word wrong. The missing piece was sharing. Every existing platform requires accounts, emails, app installs, build tools, or developer knowledge. KidHubb removes all of that. One paste, one click, your game is live.
+My 7-year-old who's barely learned to read is using Claude on his iPad to create real, playable browser games — meteor shooters, zombie games, you name it. He uses voice to describe what he wants, and can read enough to make text edits when it gets a word wrong. The missing piece was sharing. Every existing platform requires accounts, emails, app installs, build tools, or developer knowledge. ArcadeLab removes all of that. One paste, one click, your game is live.
 
 ## What Makes This Different
 
-**AI assistants are first-class visitors.** The site is designed to be read by AI, not just humans. A hidden context layer on every page gives AI assistants the information they need to help kids publish games. The `/for-ai` page is a living briefing sheet — current themes, recent games, publishing instructions — so any AI assistant that visits becomes a KidHubb guide.
+**AI assistants are first-class visitors.** The site is designed to be read by AI, not just humans. A hidden context layer on every page gives AI assistants the information they need to help kids publish games. The `/for-ai` page is a living briefing sheet — current themes, recent games, publishing instructions — so any AI assistant that visits becomes an ArcadeLab guide.
 
 **Every game is a single HTML file.** No build tools, no bundlers, no frameworks required. Just a self-contained document — the way the web was meant to work. Games are viewable, inspectable, and remixable. Popular libraries (Phaser, p5.js, Three.js, etc.) are injected automatically via CDN.
 
@@ -36,8 +38,8 @@ My 7-year-old who's barely learned to read is using Claude on his iPad to create
 ### Setup
 
 ```bash
-git clone https://github.com/YOURUSERNAME/kidhubb.git
-cd kidhubb
+git clone https://github.com/YOURUSERNAME/arcadelab.git
+cd arcadelab
 npm install
 ```
 

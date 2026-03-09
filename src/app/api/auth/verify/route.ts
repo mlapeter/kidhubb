@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
       creator_code: creator.creator_code,
       display_name: creator.display_name,
     });
-    response.cookies.set("kidhubb_identity", JSON.stringify({
+    response.cookies.set("arcadelab_identity", JSON.stringify({
       creator_id: creator.id,
       creator_code: creator.creator_code,
       display_name: creator.display_name,

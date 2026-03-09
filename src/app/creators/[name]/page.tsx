@@ -38,11 +38,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { name } = await params;
   const data = await getCreatorAndGames(name);
 
-  if (!data) return { title: "Creator Not Found — KidHubb" };
+  if (!data) return { title: "Creator Not Found — ArcadeLab" };
 
   return {
-    title: `${data.creator.display_name} — KidHubb`,
-    description: `Games by ${data.creator.display_name} on KidHubb`,
+    title: `${data.creator.display_name} — ArcadeLab`,
+    description: `Games by ${data.creator.display_name} on ArcadeLab`,
   };
 }
 

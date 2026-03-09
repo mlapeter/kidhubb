@@ -8,7 +8,7 @@ interface GamePlayerProps {
 }
 
 const GAME_RENDER_ORIGIN =
-  process.env.NEXT_PUBLIC_GAME_RENDER_ORIGIN || "https://play.kidhubb.com";
+  process.env.NEXT_PUBLIC_GAME_RENDER_ORIGIN || "https://play.arcadelab.ai";
 
 type LoadState = "loading" | "ready" | "timed-out";
 

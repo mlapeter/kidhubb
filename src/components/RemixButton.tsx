@@ -25,9 +25,9 @@ export default function RemixButton({ gameId, gameTitle, gameSlug }: RemixButton
 
       const { html } = await res.json();
 
-      // Sanitize title to prevent breaking out of the KIDHUBB comment block
+      // Sanitize title to prevent breaking out of the ARCADELAB comment block
       const safeTitle = gameTitle.replace(/-->/g, "-- >");
-      const header = `<!--KIDHUBB\ntitle: Remix of ${safeTitle}\nremix_of: ${gameSlug}\n-->\n\n`;
+      const header = `<!--ARCADELAB\ntitle: Remix of ${safeTitle}\nremix_of: ${gameSlug}\n-->\n\n`;
       await navigator.clipboard.writeText(header + html);
       setState("modal");
     } catch {

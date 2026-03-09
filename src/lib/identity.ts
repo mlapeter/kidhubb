@@ -4,23 +4,46 @@ export interface CreatorIdentity {
   display_name: string;
 }
 
-const COOKIE_NAME = "kidhubb_identity";
+const COOKIE_NAME = "arcadelab_identity";
+const LEGACY_COOKIE_NAME = "kidhubb_identity";
+const LS_KEY = "arcadelab_identity";
+const LEGACY_LS_KEY = "kidhubb_identity";
 
 export function getCreatorIdentity(): CreatorIdentity | null {
-  try {
-    const saved = localStorage.getItem("kidhubb_identity");
-    if (saved) return JSON.parse(saved);
-  } catch {
-    // localStorage unavailable or corrupted
+  // Try localStorage (new key first, then legacy)
+  for (const key of [LS_KEY, LEGACY_LS_KEY]) {
+    try {
+      const saved = localStorage.getItem(key);
+      if (saved) {
+        const identity = JSON.parse(saved);
+        if (key === LEGACY_LS_KEY) {
+          saveCreatorIdentity(identity);
+          localStorage.removeItem(LEGACY_LS_KEY);
+        }
+        return identity;
+      }
+    } catch {
+      // localStorage unavailable or corrupted
+    }
   }
 
-  try {
-    const match = document.cookie.match(
-      new RegExp(`(?:^|; )${COOKIE_NAME}=([^;]*)`)
-    );
-    if (match) return JSON.parse(decodeURIComponent(match[1]));
-  } catch {
-    // cookie missing or corrupted
+  // Try cookies (new name first, then legacy)
+  for (const name of [COOKIE_NAME, LEGACY_COOKIE_NAME]) {
+    try {
+      const match = document.cookie.match(
+        new RegExp(`(?:^|; )${name}=([^;]*)`)
+      );
+      if (match) {
+        const identity = JSON.parse(decodeURIComponent(match[1]));
+        if (name === LEGACY_COOKIE_NAME) {
+          saveCreatorIdentity(identity);
+          document.cookie = `${LEGACY_COOKIE_NAME}=; path=/; max-age=0; SameSite=Lax`;
+        }
+        return identity;
+      }
+    } catch {
+      // cookie missing or corrupted
+    }
   }
 
   return null;
@@ -28,7 +51,7 @@ export function getCreatorIdentity(): CreatorIdentity | null {
 
 export function saveCreatorIdentity(identity: CreatorIdentity) {
   try {
-    localStorage.setItem("kidhubb_identity", JSON.stringify(identity));
+    localStorage.setItem(LS_KEY, JSON.stringify(identity));
   } catch {
     // localStorage unavailable
   }
@@ -38,9 +61,11 @@ export function saveCreatorIdentity(identity: CreatorIdentity) {
 
 export function clearCreatorIdentity() {
   try {
-    localStorage.removeItem("kidhubb_identity");
+    localStorage.removeItem(LS_KEY);
+    localStorage.removeItem(LEGACY_LS_KEY);
   } catch {
     // localStorage unavailable
   }
   document.cookie = `${COOKIE_NAME}=; path=/; max-age=0; SameSite=Lax`;
+  document.cookie = `${LEGACY_COOKIE_NAME}=; path=/; max-age=0; SameSite=Lax`;
 }

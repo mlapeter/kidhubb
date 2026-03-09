@@ -41,11 +41,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const game = await getGame(slug);
 
-  if (!game) return { title: "Game Not Found — KidHubb" };
+  if (!game) return { title: "Game Not Found — ArcadeLab" };
 
   return {
-    title: `${game.title} — KidHubb`,
-    description: game.description || `Play ${game.title} by ${game.creator_name} on KidHubb!`,
+    title: `${game.title} — ArcadeLab`,
+    description: game.description || `Play ${game.title} by ${game.creator_name} on ArcadeLab!`,
   };
 }
 
@@ -59,7 +59,8 @@ export default async function PlayPage({ params }: Props) {
   let serverIsOwner = false;
   try {
     const cookieStore = await cookies();
-    const raw = cookieStore.get("kidhubb_identity")?.value;
+    const raw = cookieStore.get("arcadelab_identity")?.value
+      || cookieStore.get("kidhubb_identity")?.value;
     if (raw) {
       const parsed = JSON.parse(decodeURIComponent(raw));
       serverIsOwner = parsed.creator_id === game.creator_id;

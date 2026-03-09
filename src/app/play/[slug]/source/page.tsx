@@ -36,10 +36,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const game = await getGameWithSource(slug);
 
-  if (!game) return { title: "Source Not Found — KidHubb" };
+  if (!game) return { title: "Source Not Found — ArcadeLab" };
 
   return {
-    title: `Source: ${game.title} — KidHubb`,
+    title: `Source: ${game.title} — ArcadeLab`,
     description: `View the source code of ${game.title} by ${game.creator_name}`,
   };
 }
@@ -102,8 +102,8 @@ export default async function SourcePage({ params }: Props) {
         <p>The full source code is displayed above on this page.</p>
         <h3>Remix Instructions</h3>
         <p>
-          To remix this game, copy the source code above and modify it. Add a KIDHUBB header at the top
-          with &quot;remix_of: {game.slug}&quot; to link back to the original. Then publish at kidhubb.com/publish.
+          To remix this game, copy the source code above and modify it. Add a ARCADELAB header at the top
+          with &quot;remix_of: {game.slug}&quot; to link back to the original. Then publish at arcadelab.ai/publish.
         </p>
       </section>
     </main>

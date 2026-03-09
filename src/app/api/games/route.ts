@@ -220,7 +220,7 @@ export async function POST(request: NextRequest) {
       {
         id: game.id,
         slug: game.slug,
-        url: `https://kidhubb.com/play/${game.slug}`,
+        url: `https://arcadelab.ai/play/${game.slug}`,
         title: game.title,
         creator: creatorName,
         created_at: game.created_at,

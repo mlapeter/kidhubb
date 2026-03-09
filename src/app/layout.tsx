@@ -10,7 +10,7 @@ const pixelFont = Press_Start_2P({
 });
 
 export const metadata: Metadata = {
-  title: "KidHubb — Publish & Play Games",
+  title: "ArcadeLab — Publish & Play Games",
   description:
     "A place where kids can publish and play browser games. Make a game, share it with friends!",
   icons: {

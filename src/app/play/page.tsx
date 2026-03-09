@@ -41,8 +41,8 @@ async function getGames() {
 }
 
 export const metadata = {
-  title: "Play Games — KidHubb",
-  description: "Browse and play games made by kids on KidHubb!",
+  title: "Play Games — ArcadeLab",
+  description: "Browse and play games made by kids on ArcadeLab!",
 };
 
 export default async function PlayPage() {

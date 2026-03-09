@@ -149,7 +149,7 @@ export async function PUT(
     return NextResponse.json({
       id: updatedGame.id,
       slug: updatedGame.slug,
-      url: `https://kidhubb.com/play/${updatedGame.slug}`,
+      url: `https://arcadelab.ai/play/${updatedGame.slug}`,
       title: updatedGame.title,
     });
   } catch {

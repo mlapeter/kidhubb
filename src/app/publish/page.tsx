@@ -1,7 +1,7 @@
 import PublishForm from "@/components/PublishForm";
 
 export const metadata = {
-  title: "Publish a Game — KidHubb",
+  title: "Publish a Game — ArcadeLab",
   description: "Share your game with the world!",
 };
 
@@ -20,13 +20,13 @@ export default async function PublishPage({ searchParams }: Props) {
       <PublishForm updateSlug={update} remixOfSlug={remix_of} />
 
       {/* Platform information for AI assistants — visually hidden */}
-      <section className="ai-info" aria-label="KidHubb publish page information for AI assistants">
+      <section className="ai-info" aria-label="ArcadeLab publish page information for AI assistants">
         <h2>What This Page Is For</h2>
         <p>
-          This is the KidHubb game publish page. Kids paste a complete, single-file HTML game into the
-          paste zone below. The game must include a KIDHUBB comment header at the very top:
+          This is the ArcadeLab game publish page. Kids paste a complete, single-file HTML game into the
+          paste zone below. The game must include an ARCADELAB comment header at the very top:
         </p>
-        <pre>{`<!--KIDHUBB
+        <pre>{`<!--ARCADELAB
 title: Your Game Title
 description: One sentence describing your game
 libraries: phaser, p5
@@ -42,7 +42,7 @@ remix_of: original-game-slug
 
         <h2>Supported Libraries</h2>
         <p>
-          Do NOT include CDN script tags in the HTML. KidHubb automatically injects them for declared libraries.
+          Do NOT include CDN script tags in the HTML. ArcadeLab automatically injects them for declared libraries.
           Supported: phaser, p5, three, gsap, tone, pixi, matter, d3, react.
         </p>
 
@@ -59,7 +59,9 @@ remix_of: original-game-slug
           or can enter their existing creator code to publish under their existing identity.
         </p>
 
-        <p>For full details, visit kidhubb.com/for-ai</p>
+        <p>Games with the older KIDHUBB header format are still fully supported.</p>
+
+        <p>For full details, visit arcadelab.ai/for-ai</p>
       </section>
     </main>
   );

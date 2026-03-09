@@ -13,8 +13,8 @@ export interface ParsedGame {
   gameHtml: string;
 }
 
-export function parseKidHubbHeader(code: string): ParsedGame {
-  const headerMatch = code.match(/<!--KIDHUBB\s*\n([\s\S]*?)-->/);
+export function parseGameHeader(code: string): ParsedGame {
+  const headerMatch = code.match(/<!--(?:KIDHUBB|ARCADELAB)\s*\n([\s\S]*?)-->/);
 
   if (!headerMatch) {
     return {
@@ -27,7 +27,7 @@ export function parseKidHubbHeader(code: string): ParsedGame {
   const headerText = headerMatch[1];
   const result: ParsedGame = {
     libraries: [],
-    gameHtml: code.replace(/<!--KIDHUBB\s*\n[\s\S]*?-->\s*/, ""),
+    gameHtml: code.replace(/<!--(?:KIDHUBB|ARCADELAB)\s*\n[\s\S]*?-->\s*/, ""),
   };
 
   for (const line of headerText.split("\n")) {

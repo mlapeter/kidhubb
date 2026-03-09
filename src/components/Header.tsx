@@ -12,7 +12,7 @@ export default function Header() {
         <Link href="/" className="flex items-center gap-2 text-xs sm:text-sm">
           <span className="text-xl">🎮</span>
           <span className="text-accent-gold drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)]">
-            KidHubb
+            ArcadeLab
           </span>
         </Link>
         <nav className="flex items-center gap-2 sm:gap-3">

@@ -1,6 +1,6 @@
 // Only block patterns that are clearly malicious.
 // The real security comes from iframe sandbox="allow-scripts" (no allow-same-origin
-// for preview) and a separate subdomain (play.kidhubb.com) for production renders.
+// for preview) and a separate subdomain (play.arcadelab.ai) for production renders.
 // CSP headers (connect-src 'none', form-action 'none') add another layer. These
 // patterns are a lightweight first pass to catch obviously bad intent — not a
 // security boundary.
