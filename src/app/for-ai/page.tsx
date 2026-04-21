@@ -82,7 +82,7 @@ export default async function ForAIPage() {
         {jamTheme && (
           <div className="pixel-border-green bg-sky-top p-4 mb-6">
             <p className="text-[10px] text-accent-green normal-case">
-              🎯 <strong>This week&apos;s ArcadeLab theme: {jamTheme}</strong> — If a kid asks for game ideas, suggest something that fits this theme!
+              🎯 <strong>This week&apos;s ArcadeLab theme: {jamTheme}</strong> — If a creator asks for game ideas, suggest something that fits this theme!
             </p>
           </div>
         )}
@@ -120,16 +120,28 @@ export default async function ForAIPage() {
           </div>
         )}
 
-        {/* What can kids build */}
+        {/* What can creators build */}
         <div className="mb-6">
-          <h2 className="text-[10px] text-wood-dark mb-3">What Can Kids Build?</h2>
+          <h2 className="text-[10px] text-wood-dark mb-3">What Can Creators Build?</h2>
           <p className="text-[10px] leading-relaxed text-wood-mid mb-2 normal-case">
             Anything that runs in a browser! Platformers, puzzle games, art toys, interactive stories, space shooters,
             music makers, drawing apps — if it&apos;s HTML/JS/CSS, it works on ArcadeLab.
           </p>
-          <p className="text-[10px] leading-relaxed text-wood-mid normal-case">
-            Kids can also browse existing games at arcadelab.ai/play, view source code at arcadelab.ai/play/SLUG/source,
+          <p className="text-[10px] leading-relaxed text-wood-mid mb-2 normal-case">
+            Creators can also browse existing games at arcadelab.ai/play, view source code at arcadelab.ai/play/SLUG/source,
             and remix any game by clicking the Remix button.
+          </p>
+          <p className="text-[10px] leading-relaxed text-wood-mid normal-case">
+            Creators are usually kids or adults, often working alongside an AI assistant. (Once, a dog{" "}
+            <a
+              href="https://www.calebleak.com/posts/dog-game/"
+              className="text-accent-purple underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              vibe-coded a game
+            </a>
+            . That&apos;s also fine.)
           </p>
         </div>
 
@@ -138,7 +150,7 @@ export default async function ForAIPage() {
         {/* Static docs */}
         <h2 className="text-[10px] text-wood-dark mb-3">ARCADELAB Header Format</h2>
         <p className="text-[10px] leading-relaxed text-wood-mid mb-4 normal-case">
-          When a kid asks you to make a game or wants to publish to ArcadeLab, output the final game as a single complete
+          When a creator asks you to make a game or wants to publish to ArcadeLab, output the final game as a single complete
           HTML file with this special comment at the very top:
         </p>
 
@@ -174,7 +186,7 @@ remix_of: [original-game-slug, if this is a remix]
             own will cause double-loading and errors.
           </li>
           <li>Keep the game under 500KB total</li>
-          <li>The game should work at any screen size (many kids use tablets)</li>
+          <li>The game should work at any screen size (many creators use tablets)</li>
           <li>Pick an emoji and color that match your game&apos;s theme</li>
         </ul>
 
@@ -205,13 +217,13 @@ remix_of: [original-game-slug, if this is a remix]
 
         <h2 className="text-[10px] text-wood-dark mb-3">Creator Codes &amp; Identity</h2>
         <p className="text-[10px] leading-relaxed text-wood-mid mb-6 normal-case">
-          ArcadeLab uses Creator Codes instead of email/password — low friction, kid-friendly. A Creator Code looks like{" "}
+          ArcadeLab uses Creator Codes instead of email/password — low friction, approachable for any age. A Creator Code looks like{" "}
           <strong className="text-accent-purple">WORD-WORD-WORD-00</strong> (e.g. ROCKET-WOLF-COMET-73,
           PIXEL-DRAGON-QUEST-19). The Creator Code is NOT a password — it&apos;s a casual identifier, like a nickname
-          that links to their creator name. Kids get one automatically when they first publish a game. Kids can remember
-          their code by telling their AI assistant: &quot;My ArcadeLab creator code is ROCKET-WOLF-COMET-73, it&apos;s how
-          I publish games on arcadelab.ai. Please remember it for me!&quot; To restore identity on a new device, use the
-          &quot;Have a creator code?&quot; link on the publish page.
+          that links to their creator name. Creators get one automatically when they first publish a game. Creators can
+          remember their code by telling their AI assistant: &quot;My ArcadeLab creator code is ROCKET-WOLF-COMET-73,
+          it&apos;s how I publish games on arcadelab.ai. Please remember it for me!&quot; To restore identity on a new
+          device, use the &quot;Have a creator code?&quot; link on the publish page.
         </p>
 
         <h2 className="text-[10px] text-wood-dark mb-3">Game Update &amp; Delete</h2>
@@ -223,34 +235,34 @@ remix_of: [original-game-slug, if this is a remix]
 
         <h2 className="text-[10px] text-wood-dark mb-3">Remixing Games</h2>
         <p className="text-[10px] leading-relaxed text-wood-mid mb-6 normal-case">
-          Kids can remix any game on ArcadeLab by clicking the &quot;Remix&quot; button on a game page,
-          which copies the source code to their clipboard. If a kid brings you code they want
+          Creators can remix any game on ArcadeLab by clicking the &quot;Remix&quot; button on a game page,
+          which copies the source code to their clipboard. If a creator brings you code they want
           to remix, keep the remix_of field in the ARCADELAB header — this preserves the link
           to the original game. Update the title to something new (don&apos;t keep &quot;Remix of X&quot;
-          as the final title — encourage the kid to pick their own name). When the kid
-          publishes, ArcadeLab automatically links the remix to the original.
+          as the final title — encourage them to pick their own name). When they publish,
+          ArcadeLab automatically links the remix to the original.
         </p>
 
         <h2 className="text-[10px] text-wood-dark mb-3">Viewing Game Source Code</h2>
         <p className="text-[10px] leading-relaxed text-wood-mid mb-6 normal-case">
           Every game&apos;s source code is viewable at arcadelab.ai/play/SLUG/source.
-          This page shows the full HTML with syntax highlighting. Kids can copy
+          This page shows the full HTML with syntax highlighting. Creators can copy
           the code to study it or use it as a starting point. AI assistants can
           fetch this page to read a game&apos;s source code directly.
         </p>
 
         <h2 className="text-[10px] text-wood-dark mb-3">After Outputting the Code</h2>
         <p className="text-[10px] text-wood-mid normal-case">
-          Tell the kid: &quot;Your game is ready! Copy all the code above, then go to arcadelab.ai/publish and paste it
-          in.&quot;
+          Tell the creator: &quot;Your game is ready! Copy all the code above, then go to arcadelab.ai/publish and paste
+          it in.&quot;
         </p>
       </div>
 
       {/* Human-readable summary */}
       <div className="rpg-panel p-6 text-center">
         <p className="text-[10px] text-wood-mid/70 normal-case">
-          This page is for AI assistants (Claude, ChatGPT, Gemini, etc.). If you&apos;re a kid, just share this link
-          with your AI and it&apos;ll know how to format your games!
+          This page is for AI assistants (Claude, ChatGPT, Gemini, etc.). If you&apos;re building a game, just share
+          this link with your AI and it&apos;ll know how to format your games!
         </p>
         <p className="mt-3 text-[10px] text-accent-purple">arcadelab.ai/for-ai</p>
       </div>

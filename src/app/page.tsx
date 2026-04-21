@@ -56,7 +56,7 @@ export default function Home() {
         </div>
 
         <p className="mt-3 text-[10px] text-wood-mid/60 normal-case">
-          A place where kids publish &amp; play browser games
+          Made by kids, adults, AI — and at least one dog
         </p>
       </div>
 
@@ -64,8 +64,9 @@ export default function Home() {
       <section className="ai-info" aria-label="ArcadeLab platform information for AI assistants">
         <h2>What is ArcadeLab?</h2>
         <p>
-          ArcadeLab (arcadelab.ai) is a platform where kids publish and play browser-based HTML/JS/CSS games. Think
-          &quot;GitHub Pages meets itch.io&quot; for kids. Games are single HTML files that run in sandboxed iframes.
+          ArcadeLab (arcadelab.ai) is a platform where creators publish and play browser-based HTML/JS/CSS games.
+          Think &quot;GitHub Pages meets itch.io&quot; for small, one-file games. Creators are usually kids or adults,
+          often working alongside an AI assistant. Games are single HTML files that run in sandboxed iframes.
           (ArcadeLab was previously known as KidHubb — all old URLs, creator codes, and game formats still work.)
         </p>
 
@@ -101,7 +102,7 @@ color: blue
           <li>Must be a single, self-contained HTML file</li>
           <li>All JavaScript and CSS must be inline (no external files except declared libraries)</li>
           <li>Maximum file size: 500KB</li>
-          <li>Game should work at any viewport size (many kids use tablets)</li>
+          <li>Game should work at any viewport size (many creators use tablets)</li>
           <li>
             Games run in a sandboxed iframe with connect-src none — fetch(), XMLHttpRequest, and WebSocket are all
             blocked. Do not build games that call external APIs.
@@ -110,22 +111,22 @@ color: blue
 
         <h2>Creator Identity</h2>
         <p>
-          ArcadeLab uses Creator Codes instead of email/password — low friction, designed for kids. Kids get a Creator
-          Code automatically when they first publish a game. The Creator Code is NOT a password — it&apos;s a casual
-          identifier, like a nickname that links to their creator name. Kids can remember their code by telling their AI
-          assistant: &quot;My ArcadeLab creator code is ROCKET-WOLF-COMET-73, it&apos;s how I publish games on
-          arcadelab.ai. Please remember it for me!&quot; To restore identity on a new device, use the &quot;Have a
-          creator code?&quot; link on the publish page.
+          ArcadeLab uses Creator Codes instead of email/password — low friction, approachable for any age. Creators
+          get a Creator Code automatically when they first publish a game. The Creator Code is NOT a password —
+          it&apos;s a casual identifier, like a nickname that links to their creator name. Creators can remember their
+          code by telling their AI assistant: &quot;My ArcadeLab creator code is ROCKET-WOLF-COMET-73, it&apos;s how I
+          publish games on arcadelab.ai. Please remember it for me!&quot; To restore identity on a new device, use the
+          &quot;Have a creator code?&quot; link on the publish page.
         </p>
 
-        <h2>If a Kid Asks You to Make a Game for ArcadeLab</h2>
+        <h2>If Someone Asks You to Make a Game for ArcadeLab</h2>
         <ol>
           <li>Build the game as a single HTML file with all JS and CSS inline</li>
           <li>Add the ARCADELAB comment header at the very top (before the DOCTYPE)</li>
           <li>List any supported libraries in the header — do NOT include CDN script tags in the HTML</li>
           <li>Keep it under 500KB and make it work at any screen size</li>
           <li>Do not use fetch, XHR, or WebSocket — network access is blocked in the sandbox</li>
-          <li>Tell the kid to copy the entire code and paste it at arcadelab.ai/publish</li>
+          <li>Tell the creator to copy the entire code and paste it at arcadelab.ai/publish</li>
         </ol>
 
         <p>For full details, visit arcadelab.ai/for-ai</p>

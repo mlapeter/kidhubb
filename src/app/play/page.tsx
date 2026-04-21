@@ -42,7 +42,7 @@ async function getGames() {
 
 export const metadata = {
   title: "Play Games — ArcadeLab",
-  description: "Browse and play games made by kids on ArcadeLab!",
+  description: "Browse and play small browser games made on ArcadeLab.",
 };
 
 export default async function PlayPage() {

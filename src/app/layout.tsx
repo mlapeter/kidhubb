@@ -12,7 +12,7 @@ const pixelFont = Press_Start_2P({
 export const metadata: Metadata = {
   title: "ArcadeLab — Publish & Play Games",
   description:
-    "A place where kids can publish and play browser games. Make a game, share it with friends!",
+    "A playful home for small browser games. Make one by hand or with your AI assistant, then share it with friends.",
   icons: {
     icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>",
   },
